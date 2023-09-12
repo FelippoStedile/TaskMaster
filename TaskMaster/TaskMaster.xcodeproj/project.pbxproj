@@ -150,6 +150,7 @@
 		73FF846B2AB093560082F930 /* TaskMaster */ = {
 			isa = PBXGroup;
 			children = (
+				73FF846E2AB093560082F930 /* ContentView.swift */,
 				73FF849E2AB0A9ED0082F930 /* Views */,
 				231AACF32AB0A7F200908FD2 /* Extension */,
 				231AACEF2AB0A77D00908FD2 /* Model */,
@@ -205,7 +206,6 @@
 		73FF849E2AB0A9ED0082F930 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				73FF846E2AB093560082F930 /* ContentView.swift */,
 				73FF84962AB093DC0082F930 /* TaskItemView.swift */,
 				73FF849F2AB0ADF00082F930 /* TaskCreationView.swift */,
 			);
