@@ -13,23 +13,37 @@ final class UserManager: ObservableObject {
     
     @Published var currentUser: User?
     
+    private var userID: String?
+    
     @Published var showAlertError: Bool = false
     @Published var errorMessage: String = ""
     
     init(serviceProvider: RemoteServiceProvider) {
         self.serviceProvider = serviceProvider
+        Task {
+            do {
+                let userID =  try await serviceProvider.getUserRecordId()
+                fetchUserInfo(userID: userID)
+
+            } catch {
+                handleError(error: error)
+            }
+
+        }
+        
     }
         
     private func handleError(error: Error, origin: String = #function) {
         self.errorMessage = error.localizedDescription
         self.showAlertError = true
+        print("Error on: \(origin): \(errorMessage)")
     }
 }
 
 extension UserManager {
     
-    private func fetchUserInfo() {
-        serviceProvider.fetchCurrentUser(type: User.self) { result in
+    private func fetchUserInfo(userID: String) {
+        serviceProvider.fetchCurrentUser(type: User.self, userID: userID) { result in
             switch result {
             case .success(let user):
                 self.currentUser = user

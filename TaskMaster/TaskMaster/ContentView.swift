@@ -8,14 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var userManager: UserManager
     var body: some View {
         NavigationStack{
             VStack {
-                NavigationLink {
-                    TaskItemView()
-                } label: {
-                    Text("Task List View")
-                }
+                Text(userManager.currentUser?.name ?? "Não chegou")
                 
             }
             .padding()

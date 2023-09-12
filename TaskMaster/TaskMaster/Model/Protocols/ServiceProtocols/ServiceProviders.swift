@@ -12,8 +12,9 @@ import CloudKit
 protocol UserProviderProtocol {
     var currentUserID: String { get }
     var isSignedInToiCloud: Bool { get }
-    func fetchCurrentUser<T: Recordable>(type: T.Type, completion: @escaping (Result<T, Error>) -> Void)
+    func fetchCurrentUser<T: Recordable>(type: T.Type, userID: String ,completion: @escaping (Result<T, Error>) -> Void)
     func createUser<T: Recordable>(user: T) async throws
+    func getUserRecordId() async throws -> String 
 }
 
 

@@ -23,7 +23,25 @@ final class CloudKitService: RemoteServiceProvider {
 }
 
 extension CloudKitService {
+    
+    func getUserRecordId() async throws -> String  {
+        try await withCheckedThrowingContinuation { continuation in
+            self.container.fetchUserRecordID(completionHandler: { (recordId, error) in
+                if let name = recordId?.recordName {
+                    self.currentUserID = name
+                    continuation.resume(returning: name)
+                }
+                else if let error = error {
+                    continuation.resume(throwing: error)
+                }
+            })
+       }
+    }
+    
     private func getUserRecordId() {
+        
+
+        
         DispatchQueue.main.async  {
             self.container.fetchUserRecordID(completionHandler: { (recordId, error) in
                 if let name = recordId?.recordName {
@@ -228,10 +246,9 @@ extension CloudKitService {
 
 extension CloudKitService {
     // Busca os dados do usuário corrente
-    func fetchCurrentUser<T: Recordable>(type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+    func fetchCurrentUser<T: Recordable>(type: T.Type, userID: String ,completion: @escaping (Result<T, Error>) -> Void) {
         
-        //  semaphore.wait()
-        let predicate = NSPredicate(format: "id == %@", currentUserID)
+        let predicate = NSPredicate(format: "id == %@", userID)
         print("CurrentUserID")
         
         fetchData(predicate: predicate, type: T.self) { result in
