@@ -8,14 +8,14 @@
 import CloudKit
 import SwiftUI
 
-final class CloudKitService {
-    
+final class CloudKitService: RemoteServiceProvider {
+
     static let shared: CloudKitService = CloudKitService()
     private let container = CKContainer.default()
     let semaphore = DispatchSemaphore(value: 0)
     @AppStorage("currentUserID") var currentUserID: String = ""
     var isSignedInToiCloud: Bool = false
-
+    
     private init(){
         getiCloudStatus()
         getUserRecordId()
@@ -189,23 +189,6 @@ extension CloudKitService {
         }
     }
     
-    // Busca os dados do usuário corrente
-    func fetchCurrentUser<T: Recordable>(type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
-        
-        //  semaphore.wait()
-        let predicate = NSPredicate(format: "id == %@", currentUserID)
-        print("CurrentUserID")
-        
-        fetchData(predicate: predicate, type: T.self) { result in
-            switch result {
-            case .success(let userData):
-                completion(.success(userData))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
 }
 
 extension CloudKitService {
@@ -242,3 +225,64 @@ extension CloudKitService {
         }
     }
 }
+
+extension CloudKitService {
+    // Busca os dados do usuário corrente
+    func fetchCurrentUser<T: Recordable>(type: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+        
+        //  semaphore.wait()
+        let predicate = NSPredicate(format: "id == %@", currentUserID)
+        print("CurrentUserID")
+        
+        fetchData(predicate: predicate, type: T.self) { result in
+            switch result {
+            case .success(let userData):
+                completion(.success(userData))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func createUser<T>(user: T) async throws where T : Recordable {
+        try await saveData(data: user)
+    }
+}
+
+extension CloudKitService {
+    private func delete(data: CKRecord) async throws {
+         let recordID = data.recordID
+         try await container.publicCloudDatabase.deleteRecord(withID: recordID)
+     }
+    
+    private func saveData<T: CKRecord>(data: T)  async throws {
+        try await container.publicCloudDatabase.save(data)
+    }
+    
+    func saveData<T: Recordable>(data: T) async throws {
+        let record = data.toRecord()
+        try await container.publicCloudDatabase.save(record)
+    }
+    
+    func update(data: Recordable) throws {
+        Task {
+            guard let record = data.record else {
+               let error = NSError(domain: "record não encotrado", code: 0)
+                throw error
+            }
+            
+            record.setValues(data: data)
+            try await saveData(data: record)
+        }
+    }
+    
+    func delete(data: Recordable) async throws {
+        guard let record = data.record else {
+            print("Error on delete data, invalid Record")
+            return
+        }
+        
+        try await delete(data: record)
+    }
+}
+

@@ -11,6 +11,10 @@
 		231AACF22AB0A79D00908FD2 /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AACF12AB0A79D00908FD2 /* Recordable.swift */; };
 		231AACF52AB0A80300908FD2 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AACF42AB0A80300908FD2 /* Data+Extension.swift */; };
 		231AACF92AB0AA7200908FD2 /* CloudKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AACF82AB0AA7200908FD2 /* CloudKitError.swift */; };
+		231AACFD2AB0AF6200908FD2 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AACFC2AB0AF6200908FD2 /* UserManager.swift */; };
+		231AAD032AB0B1EE00908FD2 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AAD022AB0B1EE00908FD2 /* Room.swift */; };
+		231AAD052AB0BF9200908FD2 /* CKRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AAD042AB0BF9200908FD2 /* CKRecord.swift */; };
+		231AAD082AB0C03400908FD2 /* ServiceProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AAD072AB0C03400908FD2 /* ServiceProviders.swift */; };
 		73FF846D2AB093560082F930 /* TaskMasterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF846C2AB093560082F930 /* TaskMasterApp.swift */; };
 		73FF846F2AB093560082F930 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF846E2AB093560082F930 /* ContentView.swift */; };
 		73FF84712AB093560082F930 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73FF84702AB093560082F930 /* Assets.xcassets */; };
@@ -20,7 +24,7 @@
 		73FF848A2AB093560082F930 /* TaskMasterUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF84892AB093560082F930 /* TaskMasterUITestsLaunchTests.swift */; };
 		73FF84972AB093DC0082F930 /* TaskItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF84962AB093DC0082F930 /* TaskItemView.swift */; };
 		73FF849A2AB096B70082F930 /* TaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF84992AB096B70082F930 /* TaskModel.swift */; };
-		73FF849D2AB09AB50082F930 /* MasterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF849C2AB09AB50082F930 /* MasterModel.swift */; };
+		73FF849D2AB09AB50082F930 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF849C2AB09AB50082F930 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +50,10 @@
 		231AACF42AB0A80300908FD2 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		231AACF82AB0AA7200908FD2 /* CloudKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitError.swift; sourceTree = "<group>"; };
 		231AACFA2AB0AEC800908FD2 /* TaskMaster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TaskMaster.entitlements; sourceTree = "<group>"; };
+		231AACFC2AB0AF6200908FD2 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		231AAD022AB0B1EE00908FD2 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		231AAD042AB0BF9200908FD2 /* CKRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CKRecord.swift; sourceTree = "<group>"; };
+		231AAD072AB0C03400908FD2 /* ServiceProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProviders.swift; sourceTree = "<group>"; };
 		73FF84692AB093560082F930 /* TaskMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73FF846C2AB093560082F930 /* TaskMasterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskMasterApp.swift; sourceTree = "<group>"; };
 		73FF846E2AB093560082F930 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -58,7 +66,7 @@
 		73FF84892AB093560082F930 /* TaskMasterUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskMasterUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		73FF84962AB093DC0082F930 /* TaskItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItemView.swift; sourceTree = "<group>"; };
 		73FF84992AB096B70082F930 /* TaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModel.swift; sourceTree = "<group>"; };
-		73FF849C2AB09AB50082F930 /* MasterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterModel.swift; sourceTree = "<group>"; };
+		73FF849C2AB09AB50082F930 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +113,8 @@
 		231AACEF2AB0A77D00908FD2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				231AAD012AB0B1D600908FD2 /* Room */,
+				231AACFE2AB0AF8A00908FD2 /* User */,
 				231AACF62AB0AA5C00908FD2 /* Enum */,
 				73FF84982AB096720082F930 /* TaskModel */,
 				73FF849B2AB09AA70082F930 /* MasterModel */,
@@ -116,6 +126,7 @@
 		231AACF02AB0A78D00908FD2 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				231AAD062AB0C01600908FD2 /* ServiceProtocols */,
 				231AACF12AB0A79D00908FD2 /* Recordable.swift */,
 			);
 			path = Protocols;
@@ -125,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				231AACF42AB0A80300908FD2 /* Data+Extension.swift */,
+				231AAD042AB0BF9200908FD2 /* CKRecord.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -143,6 +155,38 @@
 				231AACF82AB0AA7200908FD2 /* CloudKitError.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		231AACFB2AB0AF5200908FD2 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				231AACFC2AB0AF6200908FD2 /* UserManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		231AACFE2AB0AF8A00908FD2 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				73FF849C2AB09AB50082F930 /* User.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		231AAD012AB0B1D600908FD2 /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				231AAD022AB0B1EE00908FD2 /* Room.swift */,
+			);
+			path = Room;
+			sourceTree = "<group>";
+		};
+		231AAD062AB0C01600908FD2 /* ServiceProtocols */ = {
+			isa = PBXGroup;
+			children = (
+				231AAD072AB0C03400908FD2 /* ServiceProviders.swift */,
+			);
+			path = ServiceProtocols;
 			sourceTree = "<group>";
 		};
 		73FF84602AB093560082F930 = {
@@ -168,6 +212,7 @@
 		73FF846B2AB093560082F930 /* TaskMaster */ = {
 			isa = PBXGroup;
 			children = (
+				231AACFB2AB0AF5200908FD2 /* Manager */,
 				231AACFA2AB0AEC800908FD2 /* TaskMaster.entitlements */,
 				231AACF32AB0A7F200908FD2 /* Extension */,
 				231AACEF2AB0A77D00908FD2 /* Model */,
@@ -217,7 +262,6 @@
 		73FF849B2AB09AA70082F930 /* MasterModel */ = {
 			isa = PBXGroup;
 			children = (
-				73FF849C2AB09AB50082F930 /* MasterModel.swift */,
 			);
 			path = MasterModel;
 			sourceTree = "<group>";
@@ -354,13 +398,17 @@
 			files = (
 				231AACEE2AB0A6A900908FD2 /* CloudKitService.swift in Sources */,
 				231AACF52AB0A80300908FD2 /* Data+Extension.swift in Sources */,
+				231AAD052AB0BF9200908FD2 /* CKRecord.swift in Sources */,
 				73FF846F2AB093560082F930 /* ContentView.swift in Sources */,
-				73FF849D2AB09AB50082F930 /* MasterModel.swift in Sources */,
+				73FF849D2AB09AB50082F930 /* User.swift in Sources */,
 				73FF846D2AB093560082F930 /* TaskMasterApp.swift in Sources */,
 				73FF849A2AB096B70082F930 /* TaskModel.swift in Sources */,
 				231AACF22AB0A79D00908FD2 /* Recordable.swift in Sources */,
 				73FF84972AB093DC0082F930 /* TaskItemView.swift in Sources */,
+				231AACFD2AB0AF6200908FD2 /* UserManager.swift in Sources */,
 				231AACF92AB0AA7200908FD2 /* CloudKitError.swift in Sources */,
+				231AAD032AB0B1EE00908FD2 /* Room.swift in Sources */,
+				231AAD082AB0C03400908FD2 /* ServiceProviders.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
