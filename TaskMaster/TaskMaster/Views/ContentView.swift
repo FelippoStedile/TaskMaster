@@ -12,7 +12,7 @@ struct ContentView: View {
         NavigationStack{
             VStack {
                 NavigationLink {
-                    TaskItemView()
+                    TaskItemView(taskName: "Matar a cappy", taskDueDate: Date(), monthDays: [23, 24])
                 } label: {
                     Text("Task List View")
                 }
