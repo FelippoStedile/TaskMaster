@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		231AACEE2AB0A6A900908FD2 /* CloudKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AACED2AB0A6A900908FD2 /* CloudKitService.swift */; };
+		231AACF22AB0A79D00908FD2 /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AACF12AB0A79D00908FD2 /* Recordable.swift */; };
+		231AACF52AB0A80300908FD2 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AACF42AB0A80300908FD2 /* Data+Extension.swift */; };
 		73FF846D2AB093560082F930 /* TaskMasterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF846C2AB093560082F930 /* TaskMasterApp.swift */; };
 		73FF846F2AB093560082F930 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF846E2AB093560082F930 /* ContentView.swift */; };
 		73FF84712AB093560082F930 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73FF84702AB093560082F930 /* Assets.xcassets */; };
@@ -37,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		231AACED2AB0A6A900908FD2 /* CloudKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitService.swift; sourceTree = "<group>"; };
+		231AACF12AB0A79D00908FD2 /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
+		231AACF42AB0A80300908FD2 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		73FF84692AB093560082F930 /* TaskMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73FF846C2AB093560082F930 /* TaskMasterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskMasterApp.swift; sourceTree = "<group>"; };
 		73FF846E2AB093560082F930 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -77,6 +83,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		231AACEB2AB0A63800908FD2 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				231AACEC2AB0A64200908FD2 /* CloudKitService */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		231AACEC2AB0A64200908FD2 /* CloudKitService */ = {
+			isa = PBXGroup;
+			children = (
+				231AACED2AB0A6A900908FD2 /* CloudKitService.swift */,
+			);
+			path = CloudKitService;
+			sourceTree = "<group>";
+		};
+		231AACEF2AB0A77D00908FD2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				73FF84982AB096720082F930 /* TaskModel */,
+				73FF849B2AB09AA70082F930 /* MasterModel */,
+				231AACF02AB0A78D00908FD2 /* Protocols */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		231AACF02AB0A78D00908FD2 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				231AACF12AB0A79D00908FD2 /* Recordable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		231AACF32AB0A7F200908FD2 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				231AACF42AB0A80300908FD2 /* Data+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		73FF84602AB093560082F930 = {
 			isa = PBXGroup;
 			children = (
@@ -100,11 +148,12 @@
 		73FF846B2AB093560082F930 /* TaskMaster */ = {
 			isa = PBXGroup;
 			children = (
+				231AACF32AB0A7F200908FD2 /* Extension */,
+				231AACEF2AB0A77D00908FD2 /* Model */,
+				231AACEB2AB0A63800908FD2 /* Service */,
 				73FF846C2AB093560082F930 /* TaskMasterApp.swift */,
 				73FF846E2AB093560082F930 /* ContentView.swift */,
 				73FF84962AB093DC0082F930 /* TaskItemView.swift */,
-				73FF849B2AB09AA70082F930 /* MasterModel */,
-				73FF84982AB096720082F930 /* TaskModel */,
 				73FF84702AB093560082F930 /* Assets.xcassets */,
 				73FF84722AB093560082F930 /* Preview Content */,
 			);
@@ -282,10 +331,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				231AACEE2AB0A6A900908FD2 /* CloudKitService.swift in Sources */,
+				231AACF52AB0A80300908FD2 /* Data+Extension.swift in Sources */,
 				73FF846F2AB093560082F930 /* ContentView.swift in Sources */,
 				73FF849D2AB09AB50082F930 /* MasterModel.swift in Sources */,
 				73FF846D2AB093560082F930 /* TaskMasterApp.swift in Sources */,
 				73FF849A2AB096B70082F930 /* TaskModel.swift in Sources */,
+				231AACF22AB0A79D00908FD2 /* Recordable.swift in Sources */,
 				73FF84972AB093DC0082F930 /* TaskItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
