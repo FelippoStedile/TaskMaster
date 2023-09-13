@@ -60,14 +60,17 @@ struct TaskView: View {
                     Spacer()
                     Button("Save") {
                         
+                        editing.toggle()
                     }
                     Spacer()
                     Button("Cancel") {
                         
+                        editing.toggle()
                     }
                     Spacer()
                     Button("Delete") {
                         
+                        editing.toggle()
                     }.foregroundColor(.red)
                     Spacer()
                     
@@ -87,7 +90,11 @@ struct TaskView: View {
                             .font(.title)
                             .fontWeight(.semibold)
                             .lineLimit(2)
-                            .limitInputLength(value: $taskName, length: 60)
+                            .limitInputLength(value: $taskName, length: 40)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                    .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
+                            )
                     }
                 } else {
                     Text("\(taskName)")
@@ -182,7 +189,14 @@ struct TaskView: View {
                     }
                 }
             }
-        }
+        }.padding(8)
+        
+        .background(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+        )
+        
+        
         .sheet(isPresented: $showCalendar) {
             monthDays.sort()
         } content: {
@@ -227,7 +241,7 @@ struct TaskView: View {
 
 struct TaskView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskView(taskName: "", monthDays: [], selectedPeriod: .weekly, selectedWeek: [], dueDate: Date(), dueBool: true, editing: .constant(false))
+        TaskView(taskName: "", monthDays: [], selectedPeriod: .weekly, selectedWeek: [], dueDate: Date(), dueBool: true, editing: .constant(true))
     }
 }
 
