@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+struct taskMock {
+    
+}
+
 struct TaskListView: View {
     @State var creating: Bool = false
     @State var editing: Bool = false
@@ -16,6 +20,10 @@ struct TaskListView: View {
             VStack{
                 //ForEach{
                 TaskView(taskName: "Kill a Capibara", monthDays: [], selectedPeriod: .weekly, selectedWeek: [.monday, .tuesday, .wednesday, .thursday, .friday], dueDate: Date(), dueBool: true, editing: .constant(false))
+                
+                TaskView(taskName: "Kill em all", monthDays: [], selectedPeriod: .weekly, selectedWeek: [.sunday, .saturday], dueDate: Date(), dueBool: false, editing: .constant(false))
+                
+                TaskView(taskName: "Cappihilation", monthDays: [10, 22, 23, 24, 25, 26, 27, 28, 29, 30], selectedPeriod: .monthly, selectedWeek: [.sunday, .saturday], dueDate: Date(), dueBool: false, editing: .constant(false))
                 //}
                 
                 

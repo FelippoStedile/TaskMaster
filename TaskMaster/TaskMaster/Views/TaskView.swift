@@ -137,6 +137,7 @@ struct TaskView: View {
                                 .foregroundColor(selectedWeek.contains(day) ? .blue : .primary)
                             }
                         }
+                        Spacer()
                     }
                 } else {
                     HStack {
@@ -167,6 +168,7 @@ struct TaskView: View {
                                 Image(systemName: "plus")
                             }.padding(.vertical, 4)
                         }
+                        Spacer()
                     }
                     
                 }
