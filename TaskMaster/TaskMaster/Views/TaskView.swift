@@ -36,23 +36,9 @@ enum Week: Int {
 }
 
 struct TaskView: View {
-    @State var taskName: String
-    @State var monthDays: [Int]
-    @State var selectedPeriod: Period
-    @State var selectedWeek: [Week]
-    @State var dueDate: Date
-    
-    @State var dueBool: Bool
-    @State private var showCalendar: Bool = false
-    
+    @StateObject var viewModel: TaskManager = TaskManager()
     @Binding var editing: Bool
-    
-    let weekDays: [Week] = [.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
 
-
-
-
-    
     var body: some View {
         VStack(alignment: .leading){
             if editing{
@@ -84,20 +70,17 @@ struct TaskView: View {
                     .frame(width: 50)
                 
                 if editing {
-                    ZStack{
-                        //Rectangle()
-                        TextField("Task Name:", text: $taskName, axis: .vertical)
+                    TextField("Task Name:", text: $viewModel.taskName, axis: .vertical)
                             .font(.title)
                             .fontWeight(.semibold)
                             .lineLimit(2)
-                            .limitInputLength(value: $taskName, length: 40)
+                            .limitInputLength(value: $viewModel.taskName, length: 40)
                             .background(
                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                                     .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
                             )
-                    }
                 } else {
-                    Text("\(taskName)")
+                    Text("\(viewModel.taskName)")
                         .font(.title)
                         .fontWeight(.semibold)
                         .lineLimit(2)
@@ -107,26 +90,26 @@ struct TaskView: View {
             VStack(alignment: .leading) {
                 
                 if editing {
-                    Picker("Period", selection: $selectedPeriod) {
+                    Picker("Period", selection: $viewModel.selectedPeriod) {
                         Text("Weekly").tag(Period.weekly)
                         Text("Monthly").tag(Period.monthly)
                     }.pickerStyle(.segmented)
                         .padding(.bottom, 4)
                 }
                 
-                if selectedPeriod == .weekly {
+                if viewModel.selectedPeriod == .weekly {
                     HStack {
-                        ForEach(weekDays, id: \.self){ day in
+                        ForEach(viewModel.weekDays, id: \.self){ day in
                             if editing {
                                 Button {
-                                    selectedWeek.contains(day) ? selectedWeek = selectedWeek.filter {$0 != day} : selectedWeek.append(day)
+                                    viewModel.selectWeek(day: day)
                                 } label: {
                                     ZStack{
                                         Circle().stroke()
                                             .frame(height: 25)
                                         Text(day.dayLetter)
                                     }
-                                    .foregroundColor(selectedWeek.contains(day) ? .blue : .primary)
+                                    .foregroundColor(viewModel.containsWeekDay(day: day))
                                 }.buttonStyle(.plain)
                             } else {
                                 ZStack{
@@ -134,17 +117,17 @@ struct TaskView: View {
                                         .frame(height: 25)
                                     Text(day.dayLetter)
                                 }
-                                .foregroundColor(selectedWeek.contains(day) ? .blue : .primary)
+                                .foregroundColor(viewModel.containsWeekDay(day: day))
                             }
                         }
                         Spacer()
                     }
                 } else {
                     HStack {
-                        ForEach(monthDays, id: \.self){ day in
+                        ForEach(viewModel.monthDays, id: \.self){ day in
                             if editing {
                                 Button {
-                                    monthDays = monthDays.filter{$0 != day}
+                                    viewModel.selectMonth(day: day) 
                                 } label: {
                                     ZStack{
                                         Circle().stroke()
@@ -163,7 +146,7 @@ struct TaskView: View {
                         }
                         if editing {
                             Button {
-                                showCalendar = true
+                                viewModel.showCalendar = true
                             } label: {
                                 Image(systemName: "plus")
                             }.padding(.vertical, 4)
@@ -174,19 +157,19 @@ struct TaskView: View {
                 }
                 if editing {
                     HStack{
-                        CheckBoxCircle(checked: $dueBool)
-                        if (dueBool) {
-                            DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
+                        CheckBoxCircle(checked: $viewModel.dueBool)
+                        if (viewModel.dueBool) {
+                            DatePicker("Due Date", selection: $viewModel.dueDate, displayedComponents: .date)
                             //.padding(.trailing, 150)
                         } else {
                             Text("Due Date")
                         }
                     }
                 } else {
-                    if dueBool {
+                    if viewModel.dueBool {
                         HStack{
                             ProgressView(value:0.0)
-                            Text("\(dueDate.formatted(.dateTime.day().month().year()))")
+                            Text("\(viewModel.dueDate.formatted(.dateTime.day().month().year()))")
                         }
                     }
                 }
@@ -199,8 +182,8 @@ struct TaskView: View {
         )
         
         
-        .sheet(isPresented: $showCalendar) {
-            monthDays.sort()
+        .sheet(isPresented: $viewModel.showCalendar) {
+            viewModel.monthDays.sort()
         } content: {
                 VStack{
                     ForEach(0..<4) { line in
@@ -208,7 +191,7 @@ struct TaskView: View {
                             ForEach(1..<8){item in
                                 let day = item + line * 7
                                 Button{
-                                    monthDays.contains(day) ? monthDays = monthDays.filter {$0 != day} : monthDays.count < 10 ?  monthDays.append(day) : nil
+                                    viewModel.selectMonth(day: day)
                                 } label:
                                 {
                                     ZStack{
@@ -216,7 +199,7 @@ struct TaskView: View {
                                             .frame(height: 40)
                                         Text("\(day)")
                                     }
-                                    .foregroundColor(monthDays.contains(day) ? .blue : .primary)
+                                    .foregroundColor(viewModel.containsMonthDay(day: day))
                                 }.buttonStyle(.plain)
                         }
                     }
@@ -224,7 +207,7 @@ struct TaskView: View {
                     HStack{
                         ForEach(29..<32) {rest in
                             Button{
-                                monthDays.contains(rest) ? monthDays = monthDays.filter {$0 != rest} : monthDays.count < 10 ? monthDays.append(rest) : nil
+                                viewModel.selectMonth(day: rest)
                             } label:
                             {
                                 ZStack{
@@ -232,7 +215,7 @@ struct TaskView: View {
                                         .frame(height: 40)
                                     Text("\(rest)")
                                 }
-                                .foregroundColor(monthDays.contains(rest) ? .blue : .primary)
+                                .foregroundColor(viewModel.containsMonthDay(day: rest))
                             }.buttonStyle(.plain)
                         }
                     }
@@ -243,7 +226,7 @@ struct TaskView: View {
 
 struct TaskView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskView(taskName: "", monthDays: [], selectedPeriod: .weekly, selectedWeek: [], dueDate: Date(), dueBool: true, editing: .constant(true))
+        TaskView(editing: .constant(true))
     }
 }
 
