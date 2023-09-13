@@ -10,15 +10,22 @@ import SwiftUI
 
 final class TaskManager: ObservableObject {
     @Published var taskName: String = ""
-    @Published var monthDays: [Int] = []
     @Published var selectedPeriod: Period = .weekly
     @Published var selectedWeek: [Week] = []
-    @Published var dueDate: Date = Date()
+    @Published var monthDays: [Int] = []
+    @Published var dueDate: Date?
     
-    @Published var dueBool: Bool = true
+    
+    @Published var dueDate2: Date = Date()
+    
+    @Published var dueBool: Bool
     @Published var showCalendar: Bool = false
     
     let weekDays: [Week] = [.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
+    
+    init(dueBool: Bool) {
+        self.dueBool = dueBool
+    }
     
     
     func selectWeek(day: Week){
@@ -52,4 +59,16 @@ final class TaskManager: ObservableObject {
         }
     }
     
+    func upload(){
+        
+    }
+    
+    func cancel(){
+        
+    }
+    
+    func delete(){
+        
+        
+    }
 }

@@ -36,7 +36,7 @@ enum Week: Int {
 }
 
 struct TaskView: View {
-    @StateObject var viewModel: TaskManager = TaskManager()
+    @StateObject var viewModel: TaskManager = TaskManager(dueBool: false)
     @Binding var editing: Bool
 
     var body: some View {
@@ -45,16 +45,19 @@ struct TaskView: View {
                 HStack{
                     Spacer()
                     Button("Save") {
+                        viewModel.upload()
                         
                         editing.toggle()
                     }
                     Spacer()
                     Button("Cancel") {
+                        viewModel.cancel()
                         
                         editing.toggle()
                     }
                     Spacer()
                     Button("Delete") {
+                        viewModel.delete()
                         
                         editing.toggle()
                     }.foregroundColor(.red)
@@ -159,7 +162,7 @@ struct TaskView: View {
                     HStack{
                         CheckBoxCircle(checked: $viewModel.dueBool)
                         if (viewModel.dueBool) {
-                            DatePicker("Due Date", selection: $viewModel.dueDate, displayedComponents: .date)
+                            DatePicker("Due Date", selection: $viewModel.dueDate2, displayedComponents: .date)
                             //.padding(.trailing, 150)
                         } else {
                             Text("Due Date")
@@ -169,7 +172,7 @@ struct TaskView: View {
                     if viewModel.dueBool {
                         HStack{
                             ProgressView(value:0.0)
-                            Text("\(viewModel.dueDate.formatted(.dateTime.day().month().year()))")
+                            Text("\(viewModel.dueDate2.formatted(.dateTime.day().month().year()))")
                         }
                     }
                 }
