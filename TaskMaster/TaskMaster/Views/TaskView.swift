@@ -127,23 +127,25 @@ struct TaskView: View {
                     }
                 } else {
                     HStack {
-                        ForEach(viewModel.monthDays, id: \.self){ day in
-                            if editing {
-                                Button {
-                                    viewModel.selectMonth(day: day) 
-                                } label: {
+                        if let monthDays = viewModel.monthDays {
+                            ForEach(monthDays, id: \.self){ day in
+                                if editing {
+                                    Button {
+                                        viewModel.selectMonth(day: day)
+                                    } label: {
+                                        ZStack{
+                                            Circle().stroke()
+                                                .frame(height: 25)
+                                            Text("\(day)")
+                                        }
+                                    }.buttonStyle(.plain)
+                                }
+                                else {
                                     ZStack{
                                         Circle().stroke()
                                             .frame(height: 25)
                                         Text("\(day)")
                                     }
-                                }.buttonStyle(.plain)
-                            }
-                            else {
-                                ZStack{
-                                    Circle().stroke()
-                                        .frame(height: 25)
-                                    Text("\(day)")
                                 }
                             }
                         }
@@ -181,22 +183,21 @@ struct TaskView: View {
         
         .background(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+                .stroke(lineWidth: 1)
+                .foregroundColor(Color(red: 0, green: 0, blue: 1))
         )
         
         
-        .sheet(isPresented: $viewModel.showCalendar) {
-            viewModel.monthDays.sort()
-        } content: {
+        .sheet(isPresented: $viewModel.showCalendar){
                 VStack{
                     ForEach(0..<4) { line in
                         HStack{
                             ForEach(1..<8){item in
                                 let day = item + line * 7
                                 Button{
+                                    print("cheguei")
                                     viewModel.selectMonth(day: day)
-                                } label:
-                                {
+                                } label: {
                                     ZStack{
                                         Circle().stroke()
                                             .frame(height: 40)
