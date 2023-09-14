@@ -36,6 +36,7 @@ enum Week: Int {
 }
 
 struct TaskView: View {
+    @Binding var task: TaskModel
     @StateObject var viewModel: TaskManager = TaskManager(dueBool: false)
     @Binding var editing: Bool
 
@@ -45,7 +46,13 @@ struct TaskView: View {
                 HStack{
                     Spacer()
                     Button("Save") {
-                        viewModel.upload()
+                        let result = viewModel.upload()
+                        
+                        task.taskName = result.name
+                        task.selectedPeriod = result.period
+                        task.weekDays = result.weekDays
+                        task.dueDate = result.dueDate
+                        task.monthDays = result.monthDays
                         
                         editing.toggle()
                     }
@@ -57,9 +64,7 @@ struct TaskView: View {
                     }
                     Spacer()
                     Button("Delete") {
-                        viewModel.delete()
-                        
-                        editing.toggle()
+                        viewModel.toggleDelete()
                     }.foregroundColor(.red)
                     Spacer()
                     
@@ -163,9 +168,11 @@ struct TaskView: View {
                         .padding(.leading, 6)
                 }
             } .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .stroke(lineWidth: 2)
-                    .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
+                //editing ?
+//                RoundedRectangle(cornerRadius: 8, style: .continuous)
+//                        .stroke(lineWidth: 2)
+//                    .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
+                //: EmptyView()
             )
                 if editing {
                     HStack{
@@ -190,9 +197,13 @@ struct TaskView: View {
         }.padding(8)
         
         .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(lineWidth: 1)
-                .foregroundColor(Color(red: 0, green: 0, blue: 1))
+            //ZStack{
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .foregroundColor(Color(red: 1, green: 1, blue: 1))
+//                RoundedRectangle(cornerRadius: 20, style: .continuous)
+//                    .stroke(lineWidth: 1)
+//                    .foregroundColor(Color(red: 0, green: 0, blue: 1))
+            //}
         )
         
         
@@ -240,17 +251,25 @@ struct TaskView: View {
                 primaryButton: .destructive(
                     Text("Confirm"),
                     action: {
-                        //isModal.toggle()
+                        viewModel.cancel()
+                        editing.toggle()
                     }
                 ),
                 secondaryButton: .cancel()
             )
+        }
+        .onAppear(){
+            viewModel.taskName = task.taskName
+            viewModel.dueDate = task.dueDate
+            viewModel.monthDays = task.monthDays
+            viewModel.selectedWeek = task.weekDays
+            viewModel.selectedPeriod = task.selectedPeriod
         }
     }
 }
 
 struct TaskView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskView(editing: .constant(true))
+        TaskView(task: .constant(TaskModel(id: "Cappihilation", taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil)), editing: .constant(true))
     }
 }

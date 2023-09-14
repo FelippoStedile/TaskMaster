@@ -20,6 +20,22 @@ struct TaskModel: Recordable {
     var weekDays: [Week]?
     var dueDate: Date?
     
+    init(id: String, taskName: String, selectedPeriod: Period, monthDays: [Int]?, weekDays: [Week]?, dueDate: Date?){
+        self.id = id
+        self.taskName = taskName
+        self.selectedPeriod = selectedPeriod
+        self.monthDays = monthDays
+        self.weekDays = weekDays
+        self.dueDate = dueDate
+    }
+    
+    init(){
+        self.id = "defaultId"
+        self.taskName = ""
+        self.selectedPeriod = .weekly
+        
+    }
+    
     init?(record: CKRecord) {
         if let id = record["id"] as? String {
             self.id = id

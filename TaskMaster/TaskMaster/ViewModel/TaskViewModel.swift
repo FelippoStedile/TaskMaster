@@ -15,7 +15,7 @@ final class TaskManager: ObservableObject {
     @Published var monthDays: [Int]?
     @Published var dueDate: Date?
     
-    //@Published var task: TaskModel = TaskModel(record: )
+    //@Published var task: TaskModel
     
     @Published var dueDate2: Date = Date() {
         didSet {
@@ -94,7 +94,7 @@ final class TaskManager: ObservableObject {
         return .primary //só pra vai q buga, a gnt estranha e percebe q é possível bugar
     }
     
-    func upload(){
+    func upload() -> (name: String, period: Period, weekDays: [Week]?, monthDays: [Int]?, dueDate: Date?) {
         
         if self.selectedPeriod == .weekly {
           self.monthDays = nil
@@ -111,12 +111,9 @@ final class TaskManager: ObservableObject {
          self.dueDate = nil
         }
         
+        //manda pro cloud
         
-        print(taskName)
-        print(selectedPeriod)
-        print("\(selectedWeek)")
-        print("\(monthDays)")
-        print("\(dueDate)")
+        return (taskName, selectedPeriod, selectedWeek, monthDays, dueDate)
         
     }
     
@@ -124,8 +121,11 @@ final class TaskManager: ObservableObject {
 
     }
     
-    func delete(){
+    func toggleDelete(){
         self.deleteAlert.toggle()
+    }
+    
+    func delete(){
         
     }
 }

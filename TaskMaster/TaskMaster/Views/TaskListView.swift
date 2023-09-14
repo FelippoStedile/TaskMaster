@@ -14,21 +14,65 @@ struct taskMock {
 struct TaskListView: View {
     @State var creating: Bool = false
     @State var editing: Bool = false
+    @State var editArray: [Bool] = [false, false, false]
+    
+    @State var task1 = TaskModel(id: "Cappihilation", taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil)
+    @State var task2 = TaskModel(id: "Kill a Capibara", taskName: "Kill a Capibara", selectedPeriod: .weekly, monthDays: nil, weekDays: [.wednesday, .friday, .thursday], dueDate: Date())
+    
+    @State var taskCreationTemplate = TaskModel()
     
     var body: some View {
         ScrollView{
             VStack{
                 //ForEach{
-                TaskView(editing: .constant(false))
+                //                ZStack{
+                //                    RoundedRectangle(cornerRadius: 6)
+                //                        .foregroundColor(Color(red: 0, green: 1, blue: 1))
                 
-                TaskView(editing: .constant(false))
+                TaskView(task: $task1, editing: $editArray[0])
+                    .onTapGesture {
+                        if editing == true {
+                            editArray[0].toggle()
+                        }
+                    }
+                    .background(
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(lineWidth: 1)
+                            .foregroundColor(Color(red: 0, green: 0, blue: 1))
+                    )
+                //                }
                 
-                TaskView(editing: .constant(false))
+                TaskView(task: $task2, editing: $editArray[1])
+                    .onTapGesture {
+                        if editing == true {
+                            editArray[1].toggle()
+                        }
+                    }.background(
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(lineWidth: 1)
+                            .foregroundColor(Color(red: 0, green: 0, blue: 1))
+                    )
+                
+                TaskView(task: $task1, editing: $editArray[2])
+                    .onTapGesture {
+                        if editing == true {
+                            editArray[2].toggle()
+                        }
+                    }.background(
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(lineWidth: 1)
+                            .foregroundColor(Color(red: 0, green: 0, blue: 1))
+                    )
                 //}
                 
                 
                 if creating {
-                    TaskView(editing: $creating)
+                    TaskView(task: $taskCreationTemplate, editing: $creating)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .stroke(lineWidth: 1)
+                                .foregroundColor(Color(red: 0, green: 0, blue: 1))
+                        )
                 }
                 
                 HStack {
