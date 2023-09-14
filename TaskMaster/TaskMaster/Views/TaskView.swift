@@ -233,6 +233,19 @@ struct TaskView: View {
                     }
             }
         }
+        .alert(isPresented: $viewModel.deleteAlert) {
+            Alert(
+                title: Text("Delete Task"),
+                message: Text("Are you sure you want to delete this task? This action is irreversible"),
+                primaryButton: .destructive(
+                    Text("Confirm"),
+                    action: {
+                        //isModal.toggle()
+                    }
+                ),
+                secondaryButton: .cancel()
+            )
+        }
     }
 }
 

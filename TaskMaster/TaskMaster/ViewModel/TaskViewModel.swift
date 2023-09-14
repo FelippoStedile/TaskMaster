@@ -32,7 +32,9 @@ final class TaskManager: ObservableObject {
             }
         }
     }
+    
     @Published var showCalendar: Bool = false
+    @Published var deleteAlert: Bool = false
     
     let weekDays: [Week] = [.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
     
@@ -94,14 +96,27 @@ final class TaskManager: ObservableObject {
     
     func upload(){
         
-        //if self.task.selectedPeriod = .weekly {
-        //  self.task.monthDays = nil
-        //} else {
-        // self.task.selectedWeek = nil
-        //}
-        //if !self.dueBool {
-        // self.dueDate = nil
-        //}
+        if self.selectedPeriod == .weekly {
+          self.monthDays = nil
+        } else {
+         self.selectedWeek = nil
+        }
+        if self.selectedWeek == [] {
+            self.selectedWeek = nil
+        }
+        if self.monthDays == [] {
+            self.monthDays = nil
+        }
+        if !self.dueBool {
+         self.dueDate = nil
+        }
+        
+        
+        print(taskName)
+        print(selectedPeriod)
+        print("\(selectedWeek)")
+        print("\(monthDays)")
+        print("\(dueDate)")
         
     }
     
@@ -110,6 +125,7 @@ final class TaskManager: ObservableObject {
     }
     
     func delete(){
+        self.deleteAlert.toggle()
         
     }
 }
