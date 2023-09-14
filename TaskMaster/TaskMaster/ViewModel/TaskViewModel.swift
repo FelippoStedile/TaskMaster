@@ -15,9 +15,23 @@ final class TaskManager: ObservableObject {
     @Published var monthDays: [Int]?
     @Published var dueDate: Date?
     
-    @Published var dueDate2: Date = Date()
+    //@Published var task: TaskModel = TaskModel(record: )
     
-    @Published var dueBool: Bool
+    @Published var dueDate2: Date = Date() {
+        didSet {
+            self.dueDate = self.dueDate2
+        }
+    }
+    
+    @Published var dueBool: Bool {
+        didSet {
+            if dueBool == true {
+                if self.dueDate == nil {
+                    self.dueDate = Date()
+                }
+            }
+        }
+    }
     @Published var showCalendar: Bool = false
     
     let weekDays: [Week] = [.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
@@ -80,20 +94,22 @@ final class TaskManager: ObservableObject {
     
     func upload(){
         
-        //if task.selectedPeriod = .weekly {
-        //  task.monthDays = nil
+        //if self.task.selectedPeriod = .weekly {
+        //  self.task.monthDays = nil
         //} else {
-        // task.selectedWeek = nil
+        // self.task.selectedWeek = nil
+        //}
+        //if !self.dueBool {
+        // self.dueDate = nil
         //}
         
     }
     
     func cancel(){
-        
+
     }
     
     func delete(){
-        
         
     }
 }

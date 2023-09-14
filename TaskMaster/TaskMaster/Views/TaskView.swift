@@ -91,6 +91,7 @@ struct TaskView: View {
             }
             
             VStack(alignment: .leading) {
+                VStack(alignment: .leading) {
                 
                 if editing {
                     Picker("Period", selection: $viewModel.selectedPeriod) {
@@ -124,7 +125,8 @@ struct TaskView: View {
                             }
                         }
                         Spacer()
-                    }
+                    } .padding(.bottom, 7)
+                        .padding(.leading, 6)
                 } else {
                     HStack {
                         if let monthDays = viewModel.monthDays {
@@ -157,28 +159,34 @@ struct TaskView: View {
                             }.padding(.vertical, 4)
                         }
                         Spacer()
-                    }
-                    
+                    }.padding(.bottom, 7)
+                        .padding(.leading, 6)
                 }
+            } .background(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .stroke(lineWidth: 2)
+                    .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
+            )
                 if editing {
                     HStack{
                         CheckBoxCircle(checked: $viewModel.dueBool)
+                            .padding(.vertical, 7)
                         if (viewModel.dueBool) {
-                            DatePicker("Due Date", selection: $viewModel.dueDate2, displayedComponents: .date)
-                            //.padding(.trailing, 150)
+                            #warning("se eu vou fazer o unwrap aqui ele n da pra passar pro DatePicker se ser binding")
+                            DatePicker("Due Date", selection: $viewModel.dueDate2, in: Date()..., displayedComponents: .date)
                         } else {
                             Text("Due Date")
                         }
                     }
                 } else {
-                    if viewModel.dueBool {
+                    if let dueDate = viewModel.dueDate {
                         HStack{
                             ProgressView(value:0.0)
-                            Text("\(viewModel.dueDate2.formatted(.dateTime.day().month().year()))")
+                            Text("\(dueDate.formatted(.dateTime.day().month().year()))")
                         }
                     }
                 }
-            }
+            } 
         }.padding(8)
         
         .background(
@@ -194,8 +202,8 @@ struct TaskView: View {
                         HStack{
                             ForEach(1..<8){item in
                                 let day = item + line * 7
+                                #warning("Tem como botar isso ^ na VM?")
                                 Button{
-                                    print("cheguei")
                                     viewModel.selectMonth(day: day)
                                 } label: {
                                     ZStack{
@@ -233,5 +241,3 @@ struct TaskView_Previews: PreviewProvider {
         TaskView(editing: .constant(true))
     }
 }
-
-#warning("Fazer o due bool n ser enviado, ser um resultado da presença de um dueDate que deveria ser optional")
