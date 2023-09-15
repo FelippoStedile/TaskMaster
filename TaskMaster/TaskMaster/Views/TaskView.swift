@@ -7,34 +7,6 @@
 
 import SwiftUI
 
-enum Period: String, CaseIterable, Identifiable {
-    case monthly, weekly
-    var id: Self { self }
-}
-
-enum Week: Int {
-    case sunday = 0
-    case monday = 1
-    case tuesday = 2
-    case wednesday = 3
-    case thursday = 4
-    case friday = 5
-    case saturday = 6
-    
-    var dayLetter: String {
-        switch self{
-        case .sunday: return "S"
-        case .monday: return "M"
-        case .tuesday: return "T"
-        case .wednesday: return "W"
-        case .thursday: return "T"
-        case .friday: return "F"
-        case .saturday: return "S"
-        }
-    }
-    
-}
-
 struct TaskView: View {
     @Binding var task: TaskModel
     @StateObject var viewModel: TaskManager = TaskManager(dueBool: false)
@@ -58,23 +30,25 @@ struct TaskView: View {
                         task.monthDays = result.monthDays
                         
                         editing.toggle()
-                    } .disabled(viewModel.taskName.isEmpty)
-                    Spacer()
-                    Button("Cancel") {
-                        viewModel.taskName = task.taskName
-                        viewModel.dueDate = task.dueDate
-                        viewModel.monthDays = task.monthDays
-                        viewModel.selectedWeek = task.weekDays
-                        viewModel.selectedPeriod = task.selectedPeriod
-                        
-                        viewModel.cancel()
-                        editing.toggle()
-                    }
-                    Spacer()
+                    } .disabled(viewModel.task.taskName.isEmpty)
                     if !viewModel.disableDelete {
+                        Spacer()
+                        Button("Cancel") {
+                            viewModel.task.taskName = task.taskName
+                            viewModel.task.dueDate = task.dueDate
+                            viewModel.task.monthDays = task.monthDays
+                            viewModel.task.weekDays = task.weekDays
+                            viewModel.task.selectedPeriod = task.selectedPeriod
+                            
+                            viewModel.cancel()
+                            editing.toggle()
+                        }
+                        Spacer()
+                        
                         Button("Delete") {
                             viewModel.toggleDelete()
                         }.foregroundColor(.red)
+                        
                         
                         Spacer()
                     }
@@ -87,17 +61,17 @@ struct TaskView: View {
                     .frame(width: 50)
                 
                 if editing {
-                    TextField("Task Name:", text: $viewModel.taskName, axis: .vertical)
+                    TextField("Task Name:", text: $viewModel.task.taskName, axis: .vertical)
                             .font(.title)
                             .fontWeight(.semibold)
                             .lineLimit(2)
-                            .limitInputLength(value: $viewModel.taskName, length: 40)
+                            .limitInputLength(value: $viewModel.task.taskName, length: 40)
                             .background(
                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                                     .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
                             )
                 } else {
-                    Text("\(viewModel.taskName)")
+                    Text("\(viewModel.task.taskName)")
                         .font(.title)
                         .fontWeight(.semibold)
                         .lineLimit(2)
@@ -116,14 +90,14 @@ struct TaskView: View {
                 VStack(alignment: .leading) {
                 
                 if editing {
-                    Picker("Period", selection: $viewModel.selectedPeriod) {
+                    Picker("Period", selection: $viewModel.task.selectedPeriod) {
                         Text("Weekly").tag(Period.weekly)
                         Text("Monthly").tag(Period.monthly)
                     }.pickerStyle(.segmented)
                         .padding(.bottom, 4)
                 }
                 
-                if viewModel.selectedPeriod == .weekly {
+                    if viewModel.task.selectedPeriod == .weekly {
                     HStack {
                         ForEach(viewModel.weekDays, id: \.self){ day in
                             if editing {
@@ -153,7 +127,7 @@ struct TaskView: View {
                         .padding(.leading, 6)
                 } else {
                     HStack {
-                        if let monthDays = viewModel.monthDays {
+                        if let monthDays = viewModel.task.monthDays {
                             ForEach(monthDays, id: \.self){ day in
                                 if editing {
                                     Button {
@@ -199,7 +173,7 @@ struct TaskView: View {
                         }
                     }
                 } else {
-                    if let dueDate = viewModel.dueDate {
+                    if let dueDate = viewModel.task.dueDate {
                         HStack{
                             ProgressView(value:0.0)
                             Text("\(dueDate.formatted(.dateTime.day().month().year()))")
@@ -221,7 +195,7 @@ struct TaskView: View {
                         HStack{
                             ForEach(1..<8){item in
                                 let day = item + line * 7
-                                #warning("Tem como botar isso ^ na VM?")
+                                #warning("Seria bom botar isso ^ na VM?")
                                 Button{
                                     viewModel.selectMonth(day: day)
                                 } label: {
@@ -268,11 +242,11 @@ struct TaskView: View {
         }
         .onAppear(){
             viewModel.disableDelete = editing
-            viewModel.taskName = task.taskName
-            viewModel.dueDate = task.dueDate
-            viewModel.monthDays = task.monthDays
-            viewModel.selectedWeek = task.weekDays
-            viewModel.selectedPeriod = task.selectedPeriod
+            viewModel.task.taskName = task.taskName
+            viewModel.task.dueDate = task.dueDate
+            viewModel.task.monthDays = task.monthDays
+            viewModel.task.weekDays = task.weekDays
+            viewModel.task.selectedPeriod = task.selectedPeriod
         }
     }
 }

@@ -33,7 +33,7 @@ struct TaskListView: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 20)
                                     .foregroundColor(Color(red: 0.8, green: 0.8, blue: 0.8))
-                                Text("Create")
+                                Text("Create Task")
                                     .font(.system(size: 25))
                                     .foregroundColor(.accentColor)
                                     .padding(.vertical, 8)
@@ -48,7 +48,9 @@ struct TaskListView: View {
             }
         }) {
             TaskView(task: $viewModel.taskToCreate, editing: true)
-        }.presentationDetents([.medium])
+                .padding(.horizontal, 12)
+                .presentationDetents([.fraction(0.4)])
+        }
     }
 }
 
