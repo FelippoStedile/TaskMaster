@@ -19,13 +19,16 @@ struct CheckBoxCircle: View {
                     self.checked = true
                 }
             }, label: {
-                ZStack{
-                    Circle()
-                        .stroke(lineWidth: 1)
-                        .frame(width: 20, height: 20)
-                    Circle()
-                        .frame(width: 15, height: 15)
-                        .foregroundColor(self.checked ? .blue : .white)
+                HStack{
+                    ZStack{
+                        Circle()
+                            .stroke(lineWidth: 1)
+                            .frame(width: 20, height: 20)
+                        Circle()
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(self.checked ? .blue : .white)
+                    }
+                    Text("Due Date")
                 }
             }).buttonStyle(.plain)
            

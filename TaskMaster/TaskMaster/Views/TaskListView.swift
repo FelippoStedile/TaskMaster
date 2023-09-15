@@ -12,73 +12,23 @@ struct taskMock {
 }
 
 struct TaskListView: View {
-    @State var creating: Bool = false
-    @State var editing: Bool = false
-    @State var editArray: [Bool] = [false, false, false]
-    
-    @State var task1 = TaskModel(id: "Cappihilation", taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil)
-    @State var task2 = TaskModel(id: "Kill a Capibara", taskName: "Kill a Capibara", selectedPeriod: .weekly, monthDays: nil, weekDays: [.wednesday, .friday, .thursday], dueDate: Date())
-    
-    @State var taskCreationTemplate = TaskModel()
-    
+    @StateObject var viewModel = TaskListManager()
     var body: some View {
         ScrollView{
             VStack{
-                //ForEach{
-                //                ZStack{
-                //                    RoundedRectangle(cornerRadius: 6)
-                //                        .foregroundColor(Color(red: 0, green: 1, blue: 1))
-                
-                TaskView(task: $task1, editing: $editArray[0])
-                    .onTapGesture {
-                        if editing == true {
-                            editArray[0].toggle()
-                        }
-                    }
-                    .background(
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .stroke(lineWidth: 1)
-                            .foregroundColor(Color(red: 0, green: 0, blue: 1))
-                    )
-                //                }
-                
-                TaskView(task: $task2, editing: $editArray[1])
-                    .onTapGesture {
-                        if editing == true {
-                            editArray[1].toggle()
-                        }
-                    }.background(
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .stroke(lineWidth: 1)
-                            .foregroundColor(Color(red: 0, green: 0, blue: 1))
-                    )
-                
-                TaskView(task: $task1, editing: $editArray[2])
-                    .onTapGesture {
-                        if editing == true {
-                            editArray[2].toggle()
-                        }
-                    }.background(
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .stroke(lineWidth: 1)
-                            .foregroundColor(Color(red: 0, green: 0, blue: 1))
-                    )
-                //}
-                
-                
-                if creating {
-                    TaskView(task: $taskCreationTemplate, editing: $creating)
+                ForEach($viewModel.tasks, id: \.id){ task  in
+                    TaskView(task: task)
+                        .environmentObject(viewModel)
                         .background(
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
                                 .stroke(lineWidth: 1)
                                 .foregroundColor(Color(red: 0, green: 0, blue: 1))
                         )
                 }
-                
                 HStack {
-                    if !editing && !creating{
+                    if !viewModel.creating{
                         Button{
-                            creating.toggle()
+                            viewModel.taskCreation()
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 20)
@@ -90,24 +40,20 @@ struct TaskListView: View {
                             }
                         }.buttonStyle(.plain)
                     }
-                    
-                    if !creating{
-                        Button{
-                            editing.toggle()
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .foregroundColor(Color(red: 0.8, green: 0.8, blue: 0.8))
-                                Text(editing ? "Done" : "Edit")
-                                    .font(.system(size: 25))
-                                    .foregroundColor(.accentColor)
-                                    .padding(.vertical, 8)
-                            }
-                        }.buttonStyle(.plain)
-                    }
                 }
             }.padding(.horizontal, 8)
-        }
+        }.sheet(isPresented: $viewModel.creating, onDismiss: {
+            if viewModel.taskToCreate.taskName.isEmpty {
+                print("ta aqui")
+                viewModel.deleteTask(id: viewModel.taskCreationTemplate.id)
+            } else {
+                viewModel.tasks.append(viewModel.taskToCreate)
+                viewModel.taskToCreate = viewModel.taskCreationTemplate
+            }
+        }) {
+            //fazer sem o binding no template
+            TaskView(task: $viewModel.taskToCreate, editing: true)
+        }.presentationDetents([.medium])
     }
 }
 

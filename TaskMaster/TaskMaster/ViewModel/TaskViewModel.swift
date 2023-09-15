@@ -111,21 +111,34 @@ final class TaskManager: ObservableObject {
          self.dueDate = nil
         }
         
-        //manda pro cloud
+//        let taskCreated = TaskModel(id: <#T##String#>, taskName: <#T##String#>, selectedPeriod: <#T##Period#>, monthDays: <#T##[Int]?#>, weekDays: <#T##[Week]?#>, dueDate: <#T##Date?#>)
+//        Task {
+//            CloudKitService.shared.saveData(data: taskCreated)
+//
+//        }
         
         return (taskName, selectedPeriod, selectedWeek, monthDays, dueDate)
         
     }
     
     func cancel(){
-
+        if self.dueDate == nil {
+            self.dueBool = false
+        } else {
+            self.dueBool = true
+        }
     }
     
     func toggleDelete(){
         self.deleteAlert.toggle()
     }
     
-    func delete(){
+    func delete() {
         
+        self.dueDate = nil
+        self.taskName = ""
+        self.selectedWeek = nil
+        self.monthDays = nil
+        self.selectedPeriod = .weekly
     }
 }

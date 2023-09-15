@@ -12,7 +12,8 @@ struct ContentView: View {
     var body: some View {
         NavigationStack{
             VStack {
-                Text(userManager.currentUser?.name ?? "Não chegou")
+                TaskListView()
+                //Text(userManager.currentUser?.name ?? "Não chegou")
                 
             }
             .padding()

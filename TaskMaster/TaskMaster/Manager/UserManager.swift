@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 final class UserManager: ObservableObject {
     
     let serviceProvider: RemoteServiceProvider

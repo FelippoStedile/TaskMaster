@@ -8,7 +8,12 @@
 import SwiftUI
 import CloudKit
 
-struct TaskModel: Recordable {
+struct TaskModel: Recordable, Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(taskName)
+    }
     
     var id: String
     var record: CKRecord?
@@ -20,8 +25,8 @@ struct TaskModel: Recordable {
     var weekDays: [Week]?
     var dueDate: Date?
     
-    init(id: String, taskName: String, selectedPeriod: Period, monthDays: [Int]?, weekDays: [Week]?, dueDate: Date?){
-        self.id = id
+    init(taskName: String, selectedPeriod: Period, monthDays: [Int]?, weekDays: [Week]?, dueDate: Date?){
+        self.id = UUID().uuidString
         self.taskName = taskName
         self.selectedPeriod = selectedPeriod
         self.monthDays = monthDays

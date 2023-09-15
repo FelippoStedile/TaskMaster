@@ -38,7 +38,9 @@ enum Week: Int {
 struct TaskView: View {
     @Binding var task: TaskModel
     @StateObject var viewModel: TaskManager = TaskManager(dueBool: false)
-    @Binding var editing: Bool
+    @EnvironmentObject var listVM: TaskListManager
+    
+    @State var editing: Bool = false
 
     var body: some View {
         VStack(alignment: .leading){
@@ -46,6 +48,7 @@ struct TaskView: View {
                 HStack{
                     Spacer()
                     Button("Save") {
+                        
                         let result = viewModel.upload()
                         
                         task.taskName = result.name
@@ -55,11 +58,16 @@ struct TaskView: View {
                         task.monthDays = result.monthDays
                         
                         editing.toggle()
-                    }
+                    } .disabled(viewModel.taskName.isEmpty)
                     Spacer()
                     Button("Cancel") {
-                        viewModel.cancel()
+                        viewModel.taskName = task.taskName
+                        viewModel.dueDate = task.dueDate
+                        viewModel.monthDays = task.monthDays
+                        viewModel.selectedWeek = task.weekDays
+                        viewModel.selectedPeriod = task.selectedPeriod
                         
+                        viewModel.cancel()
                         editing.toggle()
                     }
                     Spacer()
@@ -70,7 +78,6 @@ struct TaskView: View {
                     
                 }//.padding(.vertical, 8)
             }
-            
             HStack {
                 Image(systemName: "book.circle")
                     .resizable()
@@ -93,6 +100,12 @@ struct TaskView: View {
                         .fontWeight(.semibold)
                         .lineLimit(2)
                 }
+                Spacer()
+                Button {
+                    editing.toggle()
+                } label: {
+                    Image(systemName: "pencil")
+                }.padding(.trailing, 8)
             }
             
             VStack(alignment: .leading) {
@@ -121,12 +134,14 @@ struct TaskView: View {
                                     .foregroundColor(viewModel.containsWeekDay(day: day))
                                 }.buttonStyle(.plain)
                             } else {
+                                if task.weekDays != nil {
                                 ZStack{
                                     Circle().stroke()
                                         .frame(height: 25)
                                     Text(day.dayLetter)
                                 }
                                 .foregroundColor(viewModel.containsWeekDay(day: day))
+                            }
                             }
                         }
                         Spacer()
@@ -167,22 +182,16 @@ struct TaskView: View {
                     }.padding(.bottom, 7)
                         .padding(.leading, 6)
                 }
-            } .background(
-                //editing ?
-//                RoundedRectangle(cornerRadius: 8, style: .continuous)
-//                        .stroke(lineWidth: 2)
-//                    .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
-                //: EmptyView()
-            )
+            }
                 if editing {
                     HStack{
                         CheckBoxCircle(checked: $viewModel.dueBool)
                             .padding(.vertical, 7)
+                        Spacer()
                         if (viewModel.dueBool) {
-                            #warning("se eu vou fazer o unwrap aqui ele n da pra passar pro DatePicker se ser binding")
+                            #warning("se eu vou fizer o unwrap aqui ele n da pra passar pro DatePicker se for binding, só por isso tem o dueDate2")
                             DatePicker("Due Date", selection: $viewModel.dueDate2, in: Date()..., displayedComponents: .date)
-                        } else {
-                            Text("Due Date")
+                                .labelsHidden()
                         }
                     }
                 } else {
@@ -197,13 +206,8 @@ struct TaskView: View {
         }.padding(8)
         
         .background(
-            //ZStack{
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .foregroundColor(Color(red: 1, green: 1, blue: 1))
-//                RoundedRectangle(cornerRadius: 20, style: .continuous)
-//                    .stroke(lineWidth: 1)
-//                    .foregroundColor(Color(red: 0, green: 0, blue: 1))
-            //}
         )
         
         
@@ -251,7 +255,7 @@ struct TaskView: View {
                 primaryButton: .destructive(
                     Text("Confirm"),
                     action: {
-                        viewModel.cancel()
+                        listVM.deleteTask(id: task.id)
                         editing.toggle()
                     }
                 ),
@@ -270,6 +274,6 @@ struct TaskView: View {
 
 struct TaskView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskView(task: .constant(TaskModel(id: "Cappihilation", taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil)), editing: .constant(true))
+        TaskView(task: .constant(TaskModel(taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil)))
     }
 }
