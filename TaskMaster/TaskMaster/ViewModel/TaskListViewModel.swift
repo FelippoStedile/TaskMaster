@@ -10,17 +10,12 @@ import SwiftUI
 
 final class TaskListManager: ObservableObject {
     
+    
+    
     @Published var tasks = [TaskModel(taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil), TaskModel(taskName: "Kill a Capibara", selectedPeriod: .weekly, monthDays: nil, weekDays: [.wednesday, .friday, .thursday], dueDate: Date())]
     
     @Published var creating: Bool = false
-    @Published var taskToCreate: TaskModel = TaskModel() {
-        
-        didSet{
-            print("mudei")
-            print(self.taskToCreate.id)
-        }
-    }
-    
+    @Published var taskToCreate: TaskModel = TaskModel()
     
     func taskCreation(){
         self.creating = true

@@ -71,12 +71,14 @@ struct TaskView: View {
                         editing.toggle()
                     }
                     Spacer()
-                    Button("Delete") {
-                        viewModel.toggleDelete()
-                    }.foregroundColor(.red)
-                    Spacer()
-                    
-                }//.padding(.vertical, 8)
+                    if !viewModel.disableDelete {
+                        Button("Delete") {
+                            viewModel.toggleDelete()
+                        }.foregroundColor(.red)
+                        
+                        Spacer()
+                    }
+                }
             }
             HStack {
                 Image(systemName: "book.circle")
@@ -265,6 +267,7 @@ struct TaskView: View {
             )
         }
         .onAppear(){
+            viewModel.disableDelete = editing
             viewModel.taskName = task.taskName
             viewModel.dueDate = task.dueDate
             viewModel.monthDays = task.monthDays

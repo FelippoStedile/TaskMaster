@@ -14,6 +14,7 @@ final class TaskManager: ObservableObject {
     @Published var selectedWeek: [Week]?
     @Published var monthDays: [Int]?
     @Published var dueDate: Date?
+    @Published var disableDelete: Bool = false
     
     //@Published var task: TaskModel
     
