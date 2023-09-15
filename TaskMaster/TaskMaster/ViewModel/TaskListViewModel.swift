@@ -12,16 +12,19 @@ final class TaskListManager: ObservableObject {
     
     @Published var tasks = [TaskModel(taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil), TaskModel(taskName: "Kill a Capibara", selectedPeriod: .weekly, monthDays: nil, weekDays: [.wednesday, .friday, .thursday], dueDate: Date())]
     
-    
-    let taskCreationTemplate = TaskModel()
     @Published var creating: Bool = false
-    @Published var taskToCreate: TaskModel = TaskModel()
+    @Published var taskToCreate: TaskModel = TaskModel() {
+        
+        didSet{
+            print("mudei")
+            print(self.taskToCreate.id)
+        }
+    }
     
     
     func taskCreation(){
         self.creating = true
-        self.taskToCreate = self.taskCreationTemplate
-        //self.tasks.append(taskCreationTemplate)
+        self.taskToCreate = TaskModel()
     }
     
     func deleteTask(id: String){

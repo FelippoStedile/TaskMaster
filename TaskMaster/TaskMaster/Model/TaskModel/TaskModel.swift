@@ -35,7 +35,7 @@ struct TaskModel: Recordable, Hashable {
     }
     
     init(){
-        self.id = "defaultId"
+        self.id = UUID().uuidString
         self.taskName = ""
         self.selectedPeriod = .weekly
         

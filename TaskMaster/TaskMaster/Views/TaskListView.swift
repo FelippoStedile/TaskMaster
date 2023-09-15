@@ -44,11 +44,10 @@ struct TaskListView: View {
             }.padding(.horizontal, 8)
         }.sheet(isPresented: $viewModel.creating, onDismiss: {
             if viewModel.taskToCreate.taskName.isEmpty {
-                print("ta aqui")
-                viewModel.deleteTask(id: viewModel.taskCreationTemplate.id)
+                viewModel.deleteTask(id: viewModel.taskToCreate.id)
             } else {
                 viewModel.tasks.append(viewModel.taskToCreate)
-                viewModel.taskToCreate = viewModel.taskCreationTemplate
+                viewModel.taskToCreate = TaskModel()
             }
         }) {
             //fazer sem o binding no template

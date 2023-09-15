@@ -101,11 +101,13 @@ struct TaskView: View {
                         .lineLimit(2)
                 }
                 Spacer()
-                Button {
-                    editing.toggle()
-                } label: {
-                    Image(systemName: "pencil")
-                }.padding(.trailing, 8)
+                if !editing {
+                    Button {
+                        editing.toggle()
+                    } label: {
+                        Image(systemName: "pencil")
+                    }.padding(.trailing, 8)
+                }
             }
             
             VStack(alignment: .leading) {
