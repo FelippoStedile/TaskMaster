@@ -90,6 +90,20 @@ final class TaskManager: ObservableObject {
         return .primary
     }
     
+    func progressValue() -> Float? {
+        if let dueDate = task.dueDate {
+            let numDays = Calendar.current.dateComponents([.day], from: Date(), to: dueDate).day
+            
+            if let numDaysUnwrap = numDays {
+                let result = (1 - Float(numDaysUnwrap)/30.0)
+                if result > 0 {
+                    return result
+                }
+            }
+        }
+        return 0.0
+    }
+    
     func upload() -> (name: String, period: Period, weekDays: [Week]?, monthDays: [Int]?, dueDate: Date?) {
         
         if self.task.selectedPeriod == .weekly {

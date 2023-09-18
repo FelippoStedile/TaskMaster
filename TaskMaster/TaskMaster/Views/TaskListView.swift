@@ -22,7 +22,7 @@ struct TaskListView: View {
                         .background(
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
                                 .stroke(lineWidth: 1)
-                                .foregroundColor(Color(red: 0, green: 0, blue: 1))
+                                .foregroundColor(.blue)
                         )
                 }
                 HStack {
@@ -32,7 +32,7 @@ struct TaskListView: View {
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 20)
-                                    .foregroundColor(Color(red: 0.8, green: 0.8, blue: 0.8))
+                                    .foregroundColor(Color("grayBackGround"))
                                 Text("Create Task")
                                     .font(.system(size: 25))
                                     .foregroundColor(.accentColor)
@@ -49,7 +49,9 @@ struct TaskListView: View {
         }) {
             TaskView(task: $viewModel.taskToCreate, editing: true)
                 .padding(.horizontal, 12)
+                .padding(.top, 16)
                 .presentationDetents([.fraction(0.4)])
+            Spacer()
         }
     }
 }

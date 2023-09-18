@@ -68,7 +68,7 @@ struct TaskView: View {
                             .limitInputLength(value: $viewModel.task.taskName, length: 40)
                             .background(
                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                    .foregroundColor(Color(red: 0.9, green: 0.9, blue: 0.9))
+                                    .foregroundColor(Color("grayBackGround"))
                             )
                 } else {
                     Text("\(viewModel.task.taskName)")
@@ -174,9 +174,11 @@ struct TaskView: View {
                     }
                 } else {
                     if let dueDate = viewModel.task.dueDate {
-                        HStack{
-                            ProgressView(value:0.0)
-                            Text("\(dueDate.formatted(.dateTime.day().month().year()))")
+                        if let progress = viewModel.progressValue() {
+                            HStack{
+                                ProgressView(value: progress)
+                                Text("\(dueDate.formatted(.dateTime.day().month().year()))")
+                            }
                         }
                     }
                 }
@@ -185,7 +187,7 @@ struct TaskView: View {
         
         .background(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .foregroundColor(Color(red: 1, green: 1, blue: 1))
+                    .foregroundColor(Color("antiPrimary"))
         )
         
         
