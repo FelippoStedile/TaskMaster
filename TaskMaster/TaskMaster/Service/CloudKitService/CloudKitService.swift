@@ -276,13 +276,31 @@ extension CloudKitService {
         try await container.publicCloudDatabase.save(data)
     }
     
-    func saveData<T: Recordable>(data: T) async throws {
+    func saveData<T: Recordable>(data: T) async throws -> CKRecord {
         let record = data.toRecord()
-        try await container.publicCloudDatabase.save(record)
+        return try await container.publicCloudDatabase.save(record)
     }
     
-    func update(data: Recordable) throws {
-        Task {
+    func saveData<T: Recordable>(data: T, completionHandler: @escaping ((Result<CKRecord, Error>) -> ())) {
+        
+        let record = data.toRecord()
+        
+        container.publicCloudDatabase.save(record) { record, error in
+            if let error = error {
+                completionHandler(.failure(error))
+            }
+            
+            guard let record = record else {
+                let error = NSError(domain: "error on get record", code: 0)
+                completionHandler(.failure(error))
+                return
+            }
+            completionHandler(.success(record))
+        }
+    }
+    
+    
+    func update(data: Recordable) async throws {
             guard let record = data.record else {
                let error = NSError(domain: "record não encotrado", code: 0)
                 throw error
@@ -290,7 +308,6 @@ extension CloudKitService {
             
             record.setValues(data: data)
             try await saveData(data: record)
-        }
     }
     
     func delete(data: Recordable) async throws {

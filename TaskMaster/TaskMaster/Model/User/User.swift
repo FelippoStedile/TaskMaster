@@ -24,12 +24,6 @@ struct User: Recordable {
         self.record = record
     }
     
-    //create user
-    init(name: String) {
-        self.id = "-1"
-        self.name = name
-    }
-    
     init?(record: CKRecord) {
         if let id = record["id"] as? String {
             self.id = id

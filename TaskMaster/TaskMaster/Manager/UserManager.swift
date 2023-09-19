@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 final class UserManager: ObservableObject {
     
     let serviceProvider: RemoteServiceProvider
@@ -34,8 +35,10 @@ final class UserManager: ObservableObject {
     }
         
     private func handleError(error: Error, origin: String = #function) {
-        self.errorMessage = error.localizedDescription
-        self.showAlertError = true
+        DispatchQueue.main.async {
+            self.errorMessage = error.localizedDescription
+            self.showAlertError = true
+        }
         print("Error on: \(origin): \(errorMessage)")
     }
 }

@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct TaskItemView: View {
+    var taskName: String
+    var taskDueDate: Date
+    //var weekDays: [Week]
+    var monthDays: [Int]
+    
     var body: some View {
-        VStack{
+        VStack(alignment: .leading){
             HStack {
                 Image(systemName: "book.circle")
                     .resizable()
@@ -56,12 +61,15 @@ struct TaskItemView: View {
                     Text("S")
                 }
             }
+            HStack{
+                ProgressView(value:0.1)
+                Text("10/09")
+            }
         }
     }
 }
-
 struct TaskItemView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskItemView()
+        TaskItemView(taskName: "Oi", taskDueDate: Date(), monthDays: [10, 20])
     }
 }

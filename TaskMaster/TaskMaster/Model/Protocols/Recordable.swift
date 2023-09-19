@@ -35,7 +35,10 @@ extension Recordable {
                     guard let childValue = child.value as? CKRecordValue else {
                         continue
                     }
+                    print("Chegou: \(record[label]) : \(childValue)")
                     record[label] = childValue
+                    print("Saiu")
+
                 }
             }
         }

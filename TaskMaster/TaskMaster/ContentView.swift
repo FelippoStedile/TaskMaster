@@ -10,13 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var userManager: UserManager
     var body: some View {
-        NavigationStack{
-            VStack {
-                Text(userManager.currentUser?.name ?? "Não chegou")
-                
-            }
-            .padding()
-        }
+                TaskListView()
+                //Text(userManager.currentUser?.name ?? "Não chegou")
     }
 }
 
