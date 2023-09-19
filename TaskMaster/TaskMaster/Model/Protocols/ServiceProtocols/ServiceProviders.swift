@@ -26,8 +26,8 @@ protocol DataFetcherProtocol {
 
 protocol DataManipulatorProtocol {
     func delete(data: Recordable) async throws
-    func update(data: Recordable) throws
-    func saveData<T: Recordable>(data: T) async throws
+    func update(data: Recordable) async throws
+    func saveData<T: Recordable>(data: T) async throws -> CKRecord
 }
 
 typealias RemoteServiceProvider = UserProviderProtocol & DataFetcherProtocol & DataManipulatorProtocol

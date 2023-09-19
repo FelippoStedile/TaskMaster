@@ -21,13 +21,26 @@ struct TaskView: View {
                     Spacer()
                     Button("Save") {
                         
-                        let result = viewModel.upload()
-                        
-                        task.taskName = result.name
-                        task.selectedPeriod = result.period
-                        task.weekDays = result.weekDays
-                        task.dueDate = result.dueDate
-                        task.monthDays = result.monthDays
+                        if task.taskName.isEmpty { //quer dizer que recebeu a taskToCreate, está criando
+                             viewModel.upload() { result in
+                                 if let result =  result {
+                                     DispatchQueue.main.async {
+                                         task = result
+                                     }
+
+                                 }
+                            }
+                            
+                        } else {
+                            if let record = task.record {
+                                
+                                let result = viewModel.update(record: record)
+                                task = result
+                                
+                            } else {
+                                print("Record nil")
+                            }
+                        }
                         
                         editing.toggle()
                     } .disabled(viewModel.task.taskName.isEmpty)
@@ -112,7 +125,7 @@ struct TaskView: View {
                                     .foregroundColor(viewModel.containsWeekDay(day: day))
                                 }.buttonStyle(.plain)
                             } else {
-                                if task.weekDays != nil {
+                                if task.weekDays != [-1] {
                                 ZStack{
                                     Circle().stroke()
                                         .frame(height: 25)
@@ -127,8 +140,8 @@ struct TaskView: View {
                         .padding(.leading, 6)
                 } else {
                     HStack {
-                        if let monthDays = viewModel.task.monthDays {
-                            ForEach(monthDays, id: \.self){ day in
+                        if viewModel.task.monthDays != [-1] {
+                            ForEach(viewModel.task.monthDays, id: \.self){ day in
                                 if editing {
                                     Button {
                                         viewModel.selectMonth(day: day)
@@ -173,11 +186,11 @@ struct TaskView: View {
                         }
                     }
                 } else {
-                    if let dueDate = viewModel.task.dueDate {
+                    if viewModel.task.dueDate > Date.distantPast {
                         if let progress = viewModel.progressValue() {
                             HStack{
                                 ProgressView(value: progress)
-                                Text("\(dueDate.formatted(.dateTime.day().month().year()))")
+                                Text("\(viewModel.task.dueDate.formatted(.dateTime.day().month().year()))")
                             }
                         }
                     }
@@ -235,7 +248,8 @@ struct TaskView: View {
                 primaryButton: .destructive(
                     Text("Confirm"),
                     action: {
-                        listVM.deleteTask(id: task.id)
+                        listVM.deleteTask(taskToDelete: task)
+                        /*n deu pra colocar a chamado do servico na VM dessa view, aí coloquei na vm da lista pra n ficar aqui no meio da view. N deu pq a vm dessa view n tem a task em si, só a versao que vai sobrescrever*/
                         editing.toggle()
                     }
                 ),
@@ -255,6 +269,6 @@ struct TaskView: View {
 
 struct TaskView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskView(task: .constant(TaskModel(taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil)))
+        TaskView(task: .constant(TaskModel(id: UUID().uuidString, taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: [-1], weekDays: [1, 2], dueDate: Date())))
     }
 }

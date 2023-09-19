@@ -21,17 +21,18 @@ struct TaskModel: Recordable, Hashable {
     var taskName: String
     var icon: Image = Image(systemName:"book.circle") //Data não mockada
     var selectedPeriod: Period
-    var monthDays: [Int]?
-    var weekDays: [Week]?
-    var dueDate: Date?
+    var monthDays: [Int] = [-1]
+    var weekDays: [Int] = [-1]
+    var dueDate: Date = Date.distantPast
     
-    init(taskName: String, selectedPeriod: Period, monthDays: [Int]?, weekDays: [Week]?, dueDate: Date?){
-        self.id = UUID().uuidString
+    init(id: String, taskName: String, selectedPeriod: Period, monthDays: [Int], weekDays: [Int], dueDate: Date, record: CKRecord? = nil){
+        self.id = id
         self.taskName = taskName
         self.selectedPeriod = selectedPeriod
         self.monthDays = monthDays
         self.weekDays = weekDays
         self.dueDate = dueDate
+        self.record = record
     }
     
     init(){
@@ -70,7 +71,7 @@ struct TaskModel: Recordable, Hashable {
             self.monthDays = monthDays
         }
         
-        if let weekDays = record["weekDays"] as? [Week] {
+        if let weekDays = record["weekDays"] as? [Int] {
             self.weekDays = weekDays
         }
         

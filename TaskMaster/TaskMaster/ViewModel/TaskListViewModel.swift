@@ -12,7 +12,7 @@ final class TaskListManager: ObservableObject {
     
     
     
-    @Published var tasks = [TaskModel(taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil), TaskModel(taskName: "Kill a Capibara", selectedPeriod: .weekly, monthDays: nil, weekDays: [.wednesday, .friday, .thursday], dueDate: Date())]
+    @Published var tasks: [TaskModel] = [/*TaskModel(taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil), TaskModel(taskName: "Kill a Capibara", selectedPeriod: .weekly, monthDays: nil, weekDays: [.wednesday, .friday, .thursday], dueDate: Date())*/]
     
     @Published var creating: Bool = false
     @Published var taskToCreate: TaskModel = TaskModel()
@@ -22,9 +22,18 @@ final class TaskListManager: ObservableObject {
         self.taskToCreate = TaskModel()
     }
     
-    func deleteTask(id: String){
+    func deleteTask(taskToDelete: TaskModel){
+        
+        Task {
+            do{
+                try await CloudKitService.shared.delete(data: taskToDelete)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        
         self.tasks.removeAll { task in
-            task.id == id
+            task.id == taskToDelete.id
         }
     }
     

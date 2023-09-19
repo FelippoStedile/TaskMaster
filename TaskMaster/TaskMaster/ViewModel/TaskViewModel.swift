@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import CloudKit
 
 final class TaskManager: ObservableObject {
     
@@ -40,27 +41,26 @@ final class TaskManager: ObservableObject {
     
     
     func selectWeek(day: Week){
-        if var selectedWeek = self.task.weekDays {
-            if selectedWeek.contains(day) {
-                self.task.weekDays = selectedWeek.filter {$0 != day}
+        if self.task.weekDays != [-1] {
+            if self.task.weekDays.contains(day.rawValue) {
+                self.task.weekDays = self.task.weekDays.filter {$0 != day.rawValue}
             } else {
-                selectedWeek.append(day)
-                self.task.weekDays = selectedWeek
+                self.task.weekDays.append(day.rawValue)
+                self.task.weekDays.sort()
             }
         } else {
-            self.task.weekDays = [day]
+            self.task.weekDays = [day.rawValue]
         }
     }
     
     func selectMonth(day: Int){
-        if var monthDays = self.task.monthDays {
-            if (monthDays.contains(day)) {
-                self.task.monthDays = monthDays.filter{$0 != day}
+        if self.task.monthDays != [-1] {
+        if (self.task.monthDays.contains(day)) {
+            self.task.monthDays = self.task.monthDays.filter{$0 != day}
             } else {
-                if (monthDays.count < 10) {
-                    monthDays.append(day)
-                    monthDays.sort()
-                    self.task.monthDays = monthDays
+                if (self.task.monthDays.count < 10) {
+                    self.task.monthDays.append(day)
+                    self.task.monthDays.sort()
                 }
             }
         } else {
@@ -69,30 +69,24 @@ final class TaskManager: ObservableObject {
     }
     
     func containsWeekDay(day: Week) -> Color {
-        if let selectedWeek = self.task.weekDays {
-            if selectedWeek.contains(day) {
-                return .blue
-            } else {
-                return .primary
-            }
+        if self.task.weekDays.contains(day.rawValue) {
+            return .blue
+        } else {
+            return .primary
         }
-        return .primary
     }
     
     func containsMonthDay(day: Int) -> Color {
-        if let monthDays = self.task.monthDays {
-            if monthDays.contains(day) {
-                return .blue
-            } else {
-                return .primary
-            }
+        
+        if self.task.monthDays.contains(day) {
+            return .blue
+        } else {
+            return .primary
         }
-        return .primary
     }
     
     func progressValue() -> Float? {
-        if let dueDate = task.dueDate {
-            let numDays = Calendar.current.dateComponents([.day], from: Date(), to: dueDate).day
+        let numDays = Calendar.current.dateComponents([.day], from: Date(), to: task.dueDate).day
             
             if let numDaysUnwrap = numDays {
                 let result = (1 - Float(numDaysUnwrap)/30.0)
@@ -100,36 +94,89 @@ final class TaskManager: ObservableObject {
                     return result
                 }
             }
-        }
         return 0.0
     }
     
-    func upload() -> (name: String, period: Period, weekDays: [Week]?, monthDays: [Int]?, dueDate: Date?) {
+    func upload(completion: @escaping (TaskModel?) -> () ) {
         
+        print("1")
         if self.task.selectedPeriod == .weekly {
-            self.task.monthDays = nil
+            self.task.monthDays = [-1]
+            print("2")
+
         } else {
-            self.task.weekDays = nil
+            self.task.weekDays = [-1]
+            
         }
         if self.task.weekDays == [] {
-            self.task.weekDays = nil
+            self.task.weekDays = [-1]
+        }
+        print("3")
+
+        if self.task.monthDays == [] {
+            self.task.monthDays = [-1]
+        }
+        print("4")
+
+        if !self.dueBool {
+            self.task.dueDate = Date.distantPast
+        }
+        print("4")
+
+        var taskCreated = TaskModel(id: UUID().uuidString, taskName: self.task.taskName, selectedPeriod: self.task.selectedPeriod, monthDays: self.task.monthDays, weekDays: self.task.weekDays, dueDate: self.task.dueDate)
+        print("6")
+
+                CloudKitService.shared.saveData(data: taskCreated) { result in
+                    DispatchQueue(label: "vrau").async {
+                        print("7")
+
+                        switch result {
+                        case .success(let record):
+                            taskCreated.record = record
+                            print("8")
+
+                            completion(taskCreated)
+                        case .failure(let error):
+                            completion(nil)
+                            print("9")
+
+                            print("Error on \(#function): \(error.localizedDescription)")
+                        }
+                    }
+                }
+
+        
+        
+    }
+    
+    func update(record: CKRecord) -> TaskModel {
+        
+        if self.task.selectedPeriod == .weekly {
+            self.task.monthDays = [-1]
+        } else {
+            self.task.weekDays = [-1]
+        }
+        if self.task.weekDays == [] {
+            self.task.weekDays = [-1]
         }
         if self.task.monthDays == [] {
-            self.task.monthDays = nil
+            self.task.monthDays = [-1]
         }
         if !self.dueBool {
-            self.task.dueDate = nil
+            self.task.dueDate = Date.distantPast
         }
         
-//        let taskCreated = TaskModel(id: <#T##String#>, taskName: <#T##String#>, selectedPeriod: <#T##Period#>, monthDays: <#T##[Int]?#>, weekDays: <#T##[Week]?#>, dueDate: <#T##Date?#>)
-//        Task {
-//            CloudKitService.shared.saveData(data: taskCreated)
-//
-//        }
-        #warning("Cloud aqui")
+        let taskUpdated = TaskModel(id: self.task.id, taskName: self.task.taskName, selectedPeriod: self.task.selectedPeriod, monthDays: self.task.monthDays, weekDays: self.task.weekDays, dueDate: self.task.dueDate, record: record)
         
-        return (task.taskName, task.selectedPeriod, task.weekDays, task.monthDays, task.dueDate)
+        Task {
+            do{
+                try await CloudKitService.shared.update(data: taskUpdated)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
         
+        return taskUpdated
     }
     
     func cancel(){
@@ -146,10 +193,10 @@ final class TaskManager: ObservableObject {
     
     func delete() {
         
-        self.task.dueDate = nil
+        self.task.dueDate = Date.distantPast
         self.task.taskName = ""
-        self.task.weekDays = nil
-        self.task.monthDays = nil
+        self.task.weekDays = [-1]
+        self.task.monthDays = [-1]
         self.task.selectedPeriod = .weekly
     }
 }
