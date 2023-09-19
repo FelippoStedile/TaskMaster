@@ -10,8 +10,19 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var userManager: UserManager
     var body: some View {
+        NavigationStack{
+            NavigationLink {
                 TaskListView()
-                //Text(userManager.currentUser?.name ?? "Não chegou")
+            } label: {
+                Text("My tasks")
+            }
+            NavigationLink{
+                RoomListView()
+            } label: {
+                Text("Rooms")
+            }
+            //Text(userManager.currentUser?.name ?? "Não chegou")
+        }
     }
 }
 

@@ -22,6 +22,15 @@
 		734026DF2AB1FB3300E46B53 /* TextLengthMod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734026DE2AB1FB3300E46B53 /* TextLengthMod.swift */; };
 		734026E12AB2089900E46B53 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734026E02AB2089900E46B53 /* TaskListView.swift */; };
 		736CCC1F2AB48F4400076CE2 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736CCC1E2AB48F4400076CE2 /* TaskListViewModel.swift */; };
+		737C0BC12ABA3E5500F9C5CD /* RoomListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BC02ABA3E5500F9C5CD /* RoomListView.swift */; };
+		737C0BC32ABA3E8800F9C5CD /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BC22ABA3E8800F9C5CD /* RoomView.swift */; };
+		737C0BC62ABA405000F9C5CD /* RoomCreationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BC52ABA405000F9C5CD /* RoomCreationModel.swift */; };
+		737C0BC82ABA420800F9C5CD /* UserListElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BC72ABA420800F9C5CD /* UserListElementView.swift */; };
+		737C0BCA2ABA48F800F9C5CD /* TaskCompletionPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BC92ABA48F800F9C5CD /* TaskCompletionPost.swift */; };
+		737C0BCC2ABA571100F9C5CD /* RoomCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BCB2ABA571100F9C5CD /* RoomCreationView.swift */; };
+		737C0BCE2ABA62C300F9C5CD /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BCD2ABA62C300F9C5CD /* CameraModel.swift */; };
+		737C0BD02ABA64E700F9C5CD /* RoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BCF2ABA64E700F9C5CD /* RoomViewModel.swift */; };
+		737C0BD22ABA682C00F9C5CD /* TaskCompletionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BD12ABA682C00F9C5CD /* TaskCompletionModel.swift */; };
 		73F6A3EF2AB505150045AA46 /* WeekEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6A3EE2AB505150045AA46 /* WeekEnums.swift */; };
 		73FF846D2AB093560082F930 /* TaskMasterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF846C2AB093560082F930 /* TaskMasterApp.swift */; };
 		73FF846F2AB093560082F930 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF846E2AB093560082F930 /* ContentView.swift */; };
@@ -69,6 +78,15 @@
 		734026DE2AB1FB3300E46B53 /* TextLengthMod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLengthMod.swift; sourceTree = "<group>"; };
 		734026E02AB2089900E46B53 /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		736CCC1E2AB48F4400076CE2 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
+		737C0BC02ABA3E5500F9C5CD /* RoomListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomListView.swift; sourceTree = "<group>"; };
+		737C0BC22ABA3E8800F9C5CD /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
+		737C0BC52ABA405000F9C5CD /* RoomCreationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCreationModel.swift; sourceTree = "<group>"; };
+		737C0BC72ABA420800F9C5CD /* UserListElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListElementView.swift; sourceTree = "<group>"; };
+		737C0BC92ABA48F800F9C5CD /* TaskCompletionPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletionPost.swift; sourceTree = "<group>"; };
+		737C0BCB2ABA571100F9C5CD /* RoomCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCreationView.swift; sourceTree = "<group>"; };
+		737C0BCD2ABA62C300F9C5CD /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
+		737C0BCF2ABA64E700F9C5CD /* RoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewModel.swift; sourceTree = "<group>"; };
+		737C0BD12ABA682C00F9C5CD /* TaskCompletionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletionModel.swift; sourceTree = "<group>"; };
 		73F6A3EE2AB505150045AA46 /* WeekEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekEnums.swift; sourceTree = "<group>"; };
 		73FF84692AB093560082F930 /* TaskMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73FF846C2AB093560082F930 /* TaskMasterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskMasterApp.swift; sourceTree = "<group>"; };
@@ -225,10 +243,33 @@
 		73143E782AB25374008498CC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				737C0BC42ABA403E00F9C5CD /* RoomViewsModels */,
 				73143E792AB2539C008498CC /* TaskViewModel.swift */,
 				736CCC1E2AB48F4400076CE2 /* TaskListViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		737C0BBF2ABA3E3700F9C5CD /* RoomViews */ = {
+			isa = PBXGroup;
+			children = (
+				737C0BC02ABA3E5500F9C5CD /* RoomListView.swift */,
+				737C0BC22ABA3E8800F9C5CD /* RoomView.swift */,
+				737C0BC92ABA48F800F9C5CD /* TaskCompletionPost.swift */,
+				737C0BCB2ABA571100F9C5CD /* RoomCreationView.swift */,
+			);
+			path = RoomViews;
+			sourceTree = "<group>";
+		};
+		737C0BC42ABA403E00F9C5CD /* RoomViewsModels */ = {
+			isa = PBXGroup;
+			children = (
+				737C0BC52ABA405000F9C5CD /* RoomCreationModel.swift */,
+				737C0BCD2ABA62C300F9C5CD /* CameraModel.swift */,
+				737C0BCF2ABA64E700F9C5CD /* RoomViewModel.swift */,
+				737C0BD12ABA682C00F9C5CD /* TaskCompletionModel.swift */,
+			);
+			path = RoomViewsModels;
 			sourceTree = "<group>";
 		};
 		73F6A3ED2AB505050045AA46 /* Week */ = {
@@ -314,6 +355,8 @@
 		73FF849E2AB0A9ED0082F930 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				737C0BC72ABA420800F9C5CD /* UserListElementView.swift */,
+				737C0BBF2ABA3E3700F9C5CD /* RoomViews */,
 				73FF849F2AB0ADF00082F930 /* TaskView.swift */,
 				734026E02AB2089900E46B53 /* TaskListView.swift */,
 				734026DC2AB1F44600E46B53 /* CheckBoxButton.swift */,
@@ -452,23 +495,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				737C0BCC2ABA571100F9C5CD /* RoomCreationView.swift in Sources */,
 				231AACEE2AB0A6A900908FD2 /* CloudKitService.swift in Sources */,
 				231AACF52AB0A80300908FD2 /* Data+Extension.swift in Sources */,
 				73F6A3EF2AB505150045AA46 /* WeekEnums.swift in Sources */,
 				734026DD2AB1F44600E46B53 /* CheckBoxButton.swift in Sources */,
 				734026DF2AB1FB3300E46B53 /* TextLengthMod.swift in Sources */,
+				737C0BCE2ABA62C300F9C5CD /* CameraModel.swift in Sources */,
 				231AAD052AB0BF9200908FD2 /* CKRecord.swift in Sources */,
 				73FF846F2AB093560082F930 /* ContentView.swift in Sources */,
+				737C0BC62ABA405000F9C5CD /* RoomCreationModel.swift in Sources */,
 				73FF849D2AB09AB50082F930 /* User.swift in Sources */,
 				73FF846D2AB093560082F930 /* TaskMasterApp.swift in Sources */,
+				737C0BCA2ABA48F800F9C5CD /* TaskCompletionPost.swift in Sources */,
 				73FF84A02AB0ADF00082F930 /* TaskView.swift in Sources */,
 				73FF849A2AB096B70082F930 /* TaskModel.swift in Sources */,
 				231AACF22AB0A79D00908FD2 /* Recordable.swift in Sources */,
 				73143E7A2AB2539C008498CC /* TaskViewModel.swift in Sources */,
+				737C0BC12ABA3E5500F9C5CD /* RoomListView.swift in Sources */,
+				737C0BC32ABA3E8800F9C5CD /* RoomView.swift in Sources */,
 				734026E12AB2089900E46B53 /* TaskListView.swift in Sources */,
+				737C0BD02ABA64E700F9C5CD /* RoomViewModel.swift in Sources */,
 				231AAD122AB0C91300908FD2 /* CreateAccountViewModel.swift in Sources */,
 				231AACFD2AB0AF6200908FD2 /* UserManager.swift in Sources */,
 				231AACF92AB0AA7200908FD2 /* CloudKitError.swift in Sources */,
+				737C0BD22ABA682C00F9C5CD /* TaskCompletionModel.swift in Sources */,
+				737C0BC82ABA420800F9C5CD /* UserListElementView.swift in Sources */,
 				231AAD032AB0B1EE00908FD2 /* Room.swift in Sources */,
 				736CCC1F2AB48F4400076CE2 /* TaskListViewModel.swift in Sources */,
 				231AAD102AB0C8FC00908FD2 /* CreateAccountView.swift in Sources */,
