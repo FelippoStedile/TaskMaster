@@ -180,8 +180,7 @@ struct TaskView: View {
                             .padding(.vertical, 7)
                         Spacer()
                         if (viewModel.dueBool) {
-                            #warning("se eu vou fizer o unwrap aqui ele n da pra passar pro DatePicker se for binding, só por isso tem o dueDate2")
-                            DatePicker("Due Date", selection: $viewModel.dueDate2, in: Date()..., displayedComponents: .date)
+                            DatePicker("Due Date", selection: $viewModel.task.dueDate, in: Date()..., displayedComponents: .date)
                                 .labelsHidden()
                         }
                     }
@@ -260,6 +259,9 @@ struct TaskView: View {
             viewModel.disableDelete = editing
             viewModel.task.taskName = task.taskName
             viewModel.task.dueDate = task.dueDate
+            if viewModel.task.dueDate > Date.distantPast {
+                viewModel.dueBool = true
+            }
             viewModel.task.monthDays = task.monthDays
             viewModel.task.weekDays = task.weekDays
             viewModel.task.selectedPeriod = task.selectedPeriod

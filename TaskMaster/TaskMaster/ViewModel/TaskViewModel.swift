@@ -13,16 +13,10 @@ final class TaskManager: ObservableObject {
     
     @Published var task = TaskModel()
     
-    @Published var dueDate2: Date = Date() {
-        didSet {
-            self.task.dueDate = self.dueDate2
-        }
-    }
-    
     @Published var dueBool: Bool {
         didSet {
             if dueBool == true {
-                if self.task.dueDate == nil {
+                if self.task.dueDate == Date.distantPast {
                     self.task.dueDate = Date()
                 }
             }
@@ -180,7 +174,7 @@ final class TaskManager: ObservableObject {
     }
     
     func cancel(){
-        if self.task.dueDate == nil {
+        if self.task.dueDate == Date.distantPast {
             self.dueBool = false
         } else {
             self.dueBool = true
