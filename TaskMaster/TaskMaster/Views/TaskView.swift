@@ -10,7 +10,8 @@ import SwiftUI
 struct TaskView: View {
     @Binding var task: TaskModel
     @StateObject var viewModel: TaskManager = TaskManager(dueBool: false)
-    @EnvironmentObject var listVM: TaskListManager
+    
+    @EnvironmentObject var userManager: UserManager
     
     @State var editing: Bool = false
 
@@ -22,12 +23,11 @@ struct TaskView: View {
                     Button("Save") {
                         
                         if task.taskName.isEmpty { //quer dizer que recebeu a taskToCreate, está criando
-                             viewModel.upload() { result in
+                             viewModel.createTask() { result in
                                  if let result =  result {
                                      DispatchQueue.main.async {
                                          task = result
                                      }
-
                                  }
                             }
                             
@@ -247,7 +247,7 @@ struct TaskView: View {
                 primaryButton: .destructive(
                     Text("Confirm"),
                     action: {
-                        listVM.deleteTask(taskToDelete: task)
+                        userManager.deleteTask(taskToDelete: task)
                         /*n deu pra colocar a chamado do servico na VM dessa view, aí coloquei na vm da lista pra n ficar aqui no meio da view. N deu pq a vm dessa view n tem a task em si, só a versao que vai sobrescrever*/
                         editing.toggle()
                     }
@@ -269,8 +269,8 @@ struct TaskView: View {
     }
 }
 
-struct TaskView_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskView(task: .constant(TaskModel(id: UUID().uuidString, taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: [-1], weekDays: [1, 2], dueDate: Date())))
-    }
-}
+//struct TaskView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TaskView(task: .constant(TaskModel(id: UUID().uuidString, taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: [-1], weekDays: [1, 2], dueDate: Date())))
+//    }
+//}

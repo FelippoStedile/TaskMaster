@@ -11,7 +11,7 @@ struct User: Recordable {
     
     var id: String
     var name: String = ""
-   // var tasks: [TaskModel] = []
+    var tasks: [String] = []
     var roomIDs: [String] = []
     var xp: Int = 0
     var record: CKRecord?

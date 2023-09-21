@@ -7,51 +7,62 @@
 
 import SwiftUI
 
-struct taskMock {
-    
-}
-
 struct TaskListView: View {
-    @StateObject var viewModel = TaskListManager()
+    
+    @EnvironmentObject var userManager: UserManager
+
     var body: some View {
-        ScrollView{
-            VStack{
-                ForEach($viewModel.tasks, id: \.id){ task  in
-                    TaskView(task: task)
-                        .environmentObject(viewModel)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .stroke(lineWidth: 1)
-                                .foregroundColor(.blue)
-                        )
-                }
-                HStack {
-                    if !viewModel.creating{
-                        Button{
-                            viewModel.taskCreation()
-                        } label: {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .foregroundColor(Color("grayBackGround"))
-                                Text("Create Task")
-                                    .font(.system(size: 25))
-                                    .foregroundColor(.accentColor)
-                                    .padding(.vertical, 8)
-                            }
-                        }.buttonStyle(.plain)
+        VStack {
+            ScrollView{
+                VStack{
+                    ForEach($userManager.userTasks, id: \.id){ task  in
+                        TaskView(task: task)
+                            .environmentObject(userManager)
+                            .background(
+                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                    .stroke(lineWidth: 1)
+                                    .foregroundColor(.blue)
+                            )
                     }
-                }
-            }.padding(.horizontal, 8)
-        }.sheet(isPresented: $viewModel.creating, onDismiss: {
-            if !viewModel.taskToCreate.taskName.isEmpty {
-                viewModel.tasks.append(viewModel.taskToCreate)
+                    
+                }.padding(.horizontal, 8)
+            }
+            Spacer()
+            
+            createTaskButton()
+
+        }
+        .sheet(isPresented: $userManager.creating, onDismiss: {
+            if !userManager.taskToCreate.taskName.isEmpty {
+                userManager.userTasks.append(userManager.taskToCreate)
             }
         }) {
-            TaskView(task: $viewModel.taskToCreate, editing: true)
+            TaskView(task: $userManager.taskToCreate, editing: true)
                 .padding(.horizontal, 12)
                 .padding(.top, 16)
                 .presentationDetents([.fraction(0.4)])
             Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    private func createTaskButton() -> some View {
+        HStack {
+            if !userManager.creating{
+                Button{
+                    userManager.taskCreation()
+                } label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundColor(Color("grayBackGround"))
+                        Text("Create Task")
+                            .font(.system(size: 25))
+                            .foregroundColor(.accentColor)
+                            .padding(.vertical, 8)
+                    }
+                }.buttonStyle(.plain)
+                    .frame(height: 50)
+            }
         }
     }
 }

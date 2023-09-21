@@ -288,6 +288,7 @@ extension CloudKitService {
         container.publicCloudDatabase.save(record) { record, error in
             if let error = error {
                 completionHandler(.failure(error))
+                return
             }
             
             guard let record = record else {

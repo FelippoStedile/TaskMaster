@@ -11,6 +11,7 @@ struct RoomListView: View {
     @State var isCreating: Bool = false
     
     var body: some View {
+        VStack {
         ZStack{
             ScrollView{
                 VStack{
@@ -28,7 +29,7 @@ struct RoomListView: View {
                             Spacer()
                             //if room.creator == self {
                             NavigationLink{
-
+                                
                             } label: {
                                 Image(systemName: "pencil")
                             }
@@ -38,6 +39,7 @@ struct RoomListView: View {
                     }
                 }
             }
+            
             VStack{
                 Spacer().frame(height: 700)
                 Button{
@@ -54,6 +56,7 @@ struct RoomListView: View {
                 }.buttonStyle(.plain)
             }.padding(.horizontal, 12)
         }
+    }
         .sheet(isPresented: $isCreating) {
             RoomCreationView()
         }

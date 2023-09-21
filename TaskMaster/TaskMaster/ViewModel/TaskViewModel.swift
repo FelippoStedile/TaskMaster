@@ -13,6 +13,8 @@ final class TaskManager: ObservableObject {
     
     @Published var task = TaskModel()
     
+    var userID: String = CloudKitService.shared.currentUserID
+    
     @Published var dueBool: Bool {
         didSet {
             if dueBool == true {
@@ -91,56 +93,42 @@ final class TaskManager: ObservableObject {
         return 0.0
     }
     
-    func upload(completion: @escaping (TaskModel?) -> () ) {
+    func createTask(completion: @escaping (TaskModel?) -> () ) {
         
-        print("1")
         if self.task.selectedPeriod == .weekly {
             self.task.monthDays = [-1]
-            print("2")
 
         } else {
             self.task.weekDays = [-1]
-            
         }
         if self.task.weekDays == [] {
             self.task.weekDays = [-1]
         }
-        print("3")
 
         if self.task.monthDays == [] {
             self.task.monthDays = [-1]
         }
-        print("4")
 
         if !self.dueBool {
             self.task.dueDate = Date.distantPast
         }
-        print("4")
-
-        var taskCreated = TaskModel(id: UUID().uuidString, taskName: self.task.taskName, selectedPeriod: self.task.selectedPeriod, monthDays: self.task.monthDays, weekDays: self.task.weekDays, dueDate: self.task.dueDate)
-        print("6")
+        
+        var taskCreated = TaskModel(id: UUID().uuidString, ownerID: userID, taskName: self.task.taskName, selectedPeriod: self.task.selectedPeriod, monthDays: self.task.monthDays, weekDays: self.task.weekDays, dueDate: self.task.dueDate)
 
                 CloudKitService.shared.saveData(data: taskCreated) { result in
                     DispatchQueue(label: "vrau").async {
-                        print("7")
 
                         switch result {
                         case .success(let record):
                             taskCreated.record = record
-                            print("8")
-
                             completion(taskCreated)
                         case .failure(let error):
-                            completion(nil)
                             print("9")
 
                             print("Error on \(#function): \(error.localizedDescription)")
                         }
                     }
                 }
-
-        
-        
     }
     
     func update(record: CKRecord) -> TaskModel {
@@ -160,7 +148,7 @@ final class TaskManager: ObservableObject {
             self.task.dueDate = Date.distantPast
         }
         
-        let taskUpdated = TaskModel(id: self.task.id, taskName: self.task.taskName, selectedPeriod: self.task.selectedPeriod, monthDays: self.task.monthDays, weekDays: self.task.weekDays, dueDate: self.task.dueDate, record: record)
+        let taskUpdated = TaskModel(id: self.task.id, ownerID: userID ,taskName: self.task.taskName, selectedPeriod: self.task.selectedPeriod, monthDays: self.task.monthDays, weekDays: self.task.weekDays, dueDate: self.task.dueDate, record: record)
         
         Task {
             do{

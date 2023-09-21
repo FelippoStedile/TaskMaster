@@ -12,7 +12,7 @@ final class TaskListManager: ObservableObject {
     
     
     
-    @Published var tasks: [TaskModel] = [/*TaskModel(taskName: "Cappihilation", selectedPeriod: .weekly, monthDays: nil, weekDays: [.monday, .wednesday], dueDate: nil), TaskModel(taskName: "Kill a Capibara", selectedPeriod: .weekly, monthDays: nil, weekDays: [.wednesday, .friday, .thursday], dueDate: Date())*/]
+    @Published var tasks: [TaskModel] = []
     
     @Published var creating: Bool = false
     @Published var taskToCreate: TaskModel = TaskModel()

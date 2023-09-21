@@ -8,14 +8,9 @@
 import SwiftUI
 import CloudKit
 
-struct TaskModel: Recordable, Hashable {
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(taskName)
-    }
-    
+struct TaskModel: Recordable {
     var id: String
+    var ownerID: String
     var record: CKRecord?
     
     var taskName: String
@@ -25,8 +20,9 @@ struct TaskModel: Recordable, Hashable {
     var weekDays: [Int] = [-1]
     var dueDate: Date = Date.distantPast
     
-    init(id: String, taskName: String, selectedPeriod: Period, monthDays: [Int], weekDays: [Int], dueDate: Date, record: CKRecord? = nil){
+    init(id: String, ownerID: String, taskName: String, selectedPeriod: Period, monthDays: [Int], weekDays: [Int], dueDate: Date, record: CKRecord? = nil) {
         self.id = id
+        self.ownerID = ownerID
         self.taskName = taskName
         self.selectedPeriod = selectedPeriod
         self.monthDays = monthDays
@@ -35,19 +31,23 @@ struct TaskModel: Recordable, Hashable {
         self.record = record
     }
     
-    init(){
+    init() {
         self.id = UUID().uuidString
+        self.ownerID = ""
         self.taskName = ""
         self.selectedPeriod = .weekly
-        
     }
     
     init?(record: CKRecord) {
-        if let id = record["id"] as? String {
-            self.id = id
-        } else {
+        guard
+            let id = record["id"] as? String,
+            let ownerID = record["ownerID"] as? String
+        else {
             return nil
         }
+        
+        self.id = id
+        self.ownerID = ownerID
         
         if let taskName = record["taskName"] as? String {
             self.taskName = taskName
@@ -55,13 +55,10 @@ struct TaskModel: Recordable, Hashable {
             self.taskName = "Nameless Task"
         }
         
-//        if let icon = record["icon"] as? Image { //ou UIImage
-//            self.icon = icon
-//        } else {
-//            self.icon = Image(systemName: "book.circle")
-//        }
+        // Adicione o código para recuperar o ícone da CKRecord se for relevante.
         
-        if let selectedPeriod = record["selectedPeriod"] as? String, let period = Period(rawValue: selectedPeriod) {
+        if let selectedPeriod = record["selectedPeriod"] as? String,
+           let period = Period(rawValue: selectedPeriod) {
             self.selectedPeriod = period
         } else {
             self.selectedPeriod = .weekly
@@ -79,8 +76,14 @@ struct TaskModel: Recordable, Hashable {
             self.dueDate = dueDate
         }
         
+        self.record = record
     }
+}
 
-    
 
+extension TaskModel: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(taskName)
+    }
 }
