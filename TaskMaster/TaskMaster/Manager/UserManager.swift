@@ -14,14 +14,8 @@ final class UserManager: ObservableObject {
     
     @Published var creating: Bool = false
     @Published var taskToCreate: TaskModel = TaskModel()
-    
-    
-    
-    @Published var currentUser: User? {
-        didSet {
-            print("deu um didSet")
-        }
-    }
+        
+    @Published var currentUser: User?
     
     @Published var userTasks: [TaskModel] = []
     @Published var userRooms: [Room] = []
@@ -30,7 +24,6 @@ final class UserManager: ObservableObject {
     
     @Published var showAlertError: Bool = false
     @Published var errorMessage: String = ""
-
     
     init(serviceProvider: RemoteServiceProvider) {
         self.serviceProvider = serviceProvider
@@ -44,13 +37,6 @@ final class UserManager: ObservableObject {
 
         }
         
-    }
-    
-    private func handleError(error: Error){
-        DispatchQueue.main.async {
-            self.errorMessage = error.localizedDescription
-            self.showAlertError = true
-        }
     }
         
     private func handleError(error: Error, origin: String = #function) {
@@ -102,13 +88,15 @@ extension UserManager {
     
     private func fetchUserInfo(userID: String) {
         serviceProvider.fetchCurrentUser(type: User.self, userID: userID) { result in
-            switch result {
-            case .success(let user):
-                self.currentUser = user
-                self.getAllUserTasks()
-                self.getAllUserRooms()
-            case .failure(let error):
-                self.handleError(error: error)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let user):
+                    self.currentUser = user
+                    self.getAllUserTasks()
+                    self.getAllUserRooms()
+                case .failure(let error):
+                    self.handleError(error: error)
+                }
             }
         }
     }

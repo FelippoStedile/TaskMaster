@@ -9,7 +9,11 @@ import SwiftUI
 
 struct TaskCompletionPost: View {
     
-    @State var postModel: TaskCompletionModel = TaskCompletionModel()
+    @State var postModel: TaskCompletionModel
+    
+    init(picture: UIImage, taskName: String, approvals: [Bool] = []) {
+       postModel = TaskCompletionModel(picture: picture, taskName: taskName, approvals: approvals)
+    }
     
     var body: some View {
         VStack(alignment: .leading){
@@ -37,6 +41,6 @@ struct TaskCompletionPost: View {
 
 struct TaskCompletionPost_Previews: PreviewProvider {
     static var previews: some View {
-        TaskCompletionPost()
+        TaskCompletionPost(picture: UIImage(), taskName: "task default")
     }
 }

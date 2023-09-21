@@ -7,11 +7,22 @@
 
 import SwiftUI
 
+final class RoomListViewModel: ObservableObject {
+    @Published var selectedRoom: Room? {
+        didSet {
+            print("Mudou essa merda")
+        }
+    }
+
+}
+
 struct RoomListView: View {
+    
+    @StateObject var viewModel: RoomListViewModel = RoomListViewModel()
+    
     @State var isCreating: Bool = false
     @State var showRoom: Bool = false
     @EnvironmentObject var userManager: UserManager
-    @State private var selectedRoom: Room?
     
     var body: some View {
         
@@ -22,9 +33,8 @@ struct RoomListView: View {
                         ForEach(userManager.userRooms, id: \.id){ room  in
                             
                             Text("\(room.name)").onTapGesture {
-                                selectedRoom = room
+                                viewModel.selectedRoom = room
                                 showRoom.toggle()
-                                print(selectedRoom)
                             }
                             
                         }
@@ -41,7 +51,7 @@ struct RoomListView: View {
             RoomCreationView(showRoomCreation: $isCreating)
                 .environmentObject(userManager)
         }.fullScreenCover(isPresented: $showRoom) {
-            if let room = selectedRoom {
+            if let room = viewModel.selectedRoom {
                 RoomView(room: .constant(room), showRoom: $showRoom)
             } else {
                 Text("Nada")

@@ -279,7 +279,13 @@ extension CloudKitService {
     
     func saveData<T: Recordable>(data: T) async throws -> CKRecord {
         let record = data.toRecord()
-        return try await container.publicCloudDatabase.save(record)
+        do {
+            let a = try await container.publicCloudDatabase.save(record)
+            return a
+        } catch {
+            print("JORGE ", error.localizedDescription)
+            throw error
+        }
     }
     
     func saveData<T: Recordable>(data: T, completionHandler: @escaping ((Result<CKRecord, Error>) -> ())) {

@@ -18,8 +18,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Rectangle()
-                    .frame(width: UIScreen.main.bounds.width * 0.95, height: 100)
                 HStack {
                     Picker("My Task", selection: $page) {
                         Text("My Tasks")

@@ -10,6 +10,7 @@ import SwiftUI
 struct RoomView: View {
     
     @StateObject var viewModel: RoomViewModel = RoomViewModel()
+    @EnvironmentObject var userManager: UserManager
 
     @Binding var room: Room
     @Binding var showRoom: Bool
@@ -38,7 +39,7 @@ struct RoomView: View {
                     Spacer().frame(height: 200)
                 
                     ForEach(viewModel.feed, id: \.self){ taskCompleted in
-                        TaskCompletionPost()
+                        TaskCompletionPost(picture: taskCompleted.picture, taskName: taskCompleted.taskName)
                     }
                 }
             }
@@ -52,25 +53,25 @@ struct RoomView: View {
         }
         
 
-//        .sheet(isPresented: $viewModel.pickingTaskToComplete) {
-//        ForEach(0..<3){ userTask in
-//            Button{
-//                viewModel.takingPic.toggle()
-//                //viewModel.selectedTask = userTask
-//            } label: {
-//                //Text(userTask.name)
-//            }
-//
-//        }
-//
-//        .sheet(isPresented: $viewModel.takingPic) {
-//            Camera(selectedImage: $viewModel.newPhoto, sourceType: .camera)
-//
-//                .onDisappear{
-//                    viewModel.feed.insert(TaskCompletionModel(picture: viewModel.newPhoto, taskName: viewModel.selectedTask.taskName, approvals: []), at: 0)
-//                }
-//        }
-//    }
+        .sheet(isPresented: $viewModel.pickingTaskToComplete) {
+            ForEach(userManager.userTasks, id: \.self){ userTask in
+            Button{
+                viewModel.takingPic.toggle()
+                viewModel.selectedTask = userTask
+            } label: {
+                Text(userTask.taskName)
+            }
+
+        }
+
+        .sheet(isPresented: $viewModel.takingPic) {
+            Camera(selectedImage: $viewModel.newPhoto, sourceType: .camera)
+
+                .onDisappear{
+                    viewModel.feed.insert(TaskCompletionModel(picture: viewModel.newPhoto, taskName: viewModel.selectedTask.taskName, approvals: []), at: 0)
+                }
+        }
+    }
     }
 }
 

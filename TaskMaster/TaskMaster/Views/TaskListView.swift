@@ -26,6 +26,7 @@ struct TaskListView: View {
                     }
                     
                 }.padding(.horizontal, 8)
+                    .padding(.vertical, 4)
             }
             Spacer()
             
