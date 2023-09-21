@@ -55,7 +55,7 @@ final class UserManager: ObservableObject {
         print("Error on: \(origin): \(errorMessage)")
     }
     
-    func getUserAllTasks() {
+    func getAllUserTasks() {
         guard let userID = currentUser?.id else {
             print("Error on \(#function): UserID is nil")
             return
@@ -72,6 +72,24 @@ final class UserManager: ObservableObject {
             }
         }
     }
+    
+    func getAllUserRooms() {
+        guard let userID = currentUser?.id else {
+            print("Error on \(#function): UserID is nil")
+            return
+        }
+        let predicate = NSPredicate(format: "creatorId == %@", userID)
+        CloudKitService.shared.fetchFilteredData(predicate: predicate, type: Room.self) { result in
+            switch result {
+            case .success(let userRooms):
+                DispatchQueue.main.async {
+                    self.userRooms = userRooms
+                }
+            case .failure(let error):
+                self.handleError(error: error)
+            }
+        }
+    }
 }
 
 extension UserManager {
@@ -81,7 +99,8 @@ extension UserManager {
             switch result {
             case .success(let user):
                 self.currentUser = user
-                self.getUserAllTasks()
+                self.getAllUserTasks()
+                self.getAllUserRooms()
             case .failure(let error):
                 self.handleError(error: error)
             }
@@ -100,6 +119,21 @@ extension UserManager {
             }
         }
     }
+    
+    func createRoom(room: Room){
+        Task {
+            do {
+                var newRoom = room
+                newRoom.creatorId = currentUser!.id
+                let roomRecrod = try  await serviceProvider.saveData(data: newRoom)
+                newRoom.record = roomRecrod
+                self.userRooms.append(newRoom)
+            } catch {
+                print("Error on \(error.localizedDescription)")
+            }
+        }
+    }
+    
 }
 
 extension UserManager {

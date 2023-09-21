@@ -37,6 +37,8 @@ struct ContentView: View {
                         .environmentObject(userManager)
                 } else {
                     RoomListView()
+                        .environmentObject(userManager)
+
                 }
             }.navigationTitle("Hello Felippo")
         }

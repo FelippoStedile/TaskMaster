@@ -20,10 +20,18 @@ struct Room: Recordable {
     var maxEditTime: Int = 0
     
     var record: CKRecord?
-    
-    init() {
-        self.id = UUID().uuidString
-        self.name = ""
+
+    init(id: String, name: String, tasksID: [String] = [], memberID: [String] = [], lastTaskAdd: Date? = nil, password: String = "", creatorId: String = "", rewardCompletion: Int = 3, penaltyFail: Int = 2, maxEditTime: Int = 0) {
+        self.id = id
+        self.name = name
+        self.tasksID = tasksID
+        self.memberID = memberID
+        self.lastTaskAdd = lastTaskAdd
+        self.password = password
+        self.creatorId = creatorId
+        self.rewardCompletion = rewardCompletion
+        self.penaltyFail = penaltyFail
+        self.maxEditTime = maxEditTime
     }
     
     init?(record: CKRecord) {

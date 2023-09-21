@@ -12,7 +12,7 @@ final class RoomManager: ObservableObject {
 
     @Published var newPhoto: UIImage = UIImage()
     @Published var takingPic: Bool = false
-    @Published var room: Room = Room()
+   
     @Published var feed: [TaskCompletionModel] = []
     
 }

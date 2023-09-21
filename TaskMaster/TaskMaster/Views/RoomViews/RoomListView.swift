@@ -9,39 +9,50 @@ import SwiftUI
 
 struct RoomListView: View {
     @State var isCreating: Bool = false
+    @State var showRoom: Bool = false
+    @EnvironmentObject var userManager: UserManager
+    @State private var selectedRoom: Room?
     
     var body: some View {
-        VStack {
-        ZStack{
-            ScrollView{
-                VStack{
-                    ForEach(0..<4){ int in
-                        
-                        HStack{
-                            NavigationLink{
-                                RoomView()
-                            } label: {
-                                Text("room 1")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.primary)
-                            }
-                            Spacer()
-                            //if room.creator == self {
-                            NavigationLink{
-                                
-                            } label: {
-                                Image(systemName: "pencil")
-                            }
-                            //}
+        
+        NavigationView {
+            VStack {
+                ScrollView{
+                    VStack{
+                        ForEach(userManager.userRooms, id: \.id){ room  in
                             
-                        } .padding(.horizontal, 26)
-                    }
+                            Text("\(room.name)").onTapGesture {
+                                selectedRoom = room
+                                showRoom.toggle()
+                                print(selectedRoom)
+                            }
+                            
+                        }
+                        
+                    }.padding(.horizontal, 8)
                 }
+                Spacer()
+                
+                createRoomButton()
+                
             }
-            
-            VStack{
-                Spacer().frame(height: 700)
+        }
+        .sheet(isPresented: $isCreating) {
+            RoomCreationView(showRoomCreation: $isCreating)
+                .environmentObject(userManager)
+        }.fullScreenCover(isPresented: $showRoom) {
+            if let room = selectedRoom {
+                RoomView(room: .constant(room), showRoom: $showRoom)
+            } else {
+                Text("Nada")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func createRoomButton() -> some View {
+        HStack {
+            if !userManager.creating{
                 Button{
                     isCreating.toggle()
                 } label: {
@@ -54,13 +65,11 @@ struct RoomListView: View {
                             .padding(.vertical, 8)
                     }
                 }.buttonStyle(.plain)
-            }.padding(.horizontal, 12)
+                    .frame(height: 50)
+            }
         }
     }
-        .sheet(isPresented: $isCreating) {
-            RoomCreationView()
-        }
-    }
+    
 }
 
 struct RoomListView_Previews: PreviewProvider {

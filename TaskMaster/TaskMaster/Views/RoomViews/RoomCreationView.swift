@@ -8,82 +8,58 @@
 import SwiftUI
 
 struct RoomCreationView: View {
-    //da pra chamar em uma sheet
     
     @StateObject var viewModel: RoomCreationManager = RoomCreationManager()
+    @EnvironmentObject var userManager: UserManager
+    
+    @Binding var showRoomCreation: Bool
+    
+    @State private var roomName = ""
+    @State private var roomPassword = ""
+    @State private var creatorId = ""
     
     var body: some View {
         VStack(alignment: .leading) {
-            
-            Button("Save") {
+            VStack {
+                Text("Create a Room")
+                    .font(.title)
                 
-            }.disabled(viewModel.room.name.isEmpty)
-            
-            
-            TextField("Room name", text: $viewModel.room.name)
-            TextField("Password", text: $viewModel.room.password)
-            
-            
-                Button {
-                    viewModel.pointsPicker.toggle()
-                } label: {
-                    Text("Points per tasks completed:")
-                    Text("\(viewModel.points)")
-                        .foregroundColor(.accentColor)
-                    
-                }.buttonStyle(.plain)
-            
-            Button {
-                viewModel.penalityPicker.toggle()
-            } label: {
-                Text("Points per tasks failed:")
-                Text("\(viewModel.penalties)")
-                    .foregroundColor(.accentColor)
+                TextField("Room Name", text: $roomName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
                 
-            }.buttonStyle(.plain)
-            
-            Button {
-                viewModel.hourPicker.toggle()
-            } label: {
-                Text("Max hour to disable tasks:")
-                Text("\(viewModel.maxHour)")
-                    .foregroundColor(.accentColor)
+                TextField("Password", text: $roomPassword)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
                 
-            }.buttonStyle(.plain)
+                TextField("Creator ID", text: $creatorId)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
                 
-            if viewModel.pointsPicker{
-                Picker("Point per tasks completed", selection: $viewModel.points) {
-                    ForEach(0..<11) { int in
-                        Text("\(int)")
-                    }
+                Button(action: createRoom) {
+                    Text("Create Room")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
-                .pickerStyle(.wheel)
-            } else if viewModel.penalityPicker {
-                Picker("Point per tasks failed", selection: $viewModel.penalties) {
-                    ForEach(0..<11) { int in
-                        Text("\(int)")
-                    }
-                }
-                .pickerStyle(.wheel)
-            } else if viewModel.hourPicker {
-                Picker("Point per tasks failed", selection: $viewModel.penalties) {
-                        ForEach(0..<25) { int in
-                            Text("\(int)")
-                        }
-                    }
-                    .pickerStyle(.wheel)
             }
-            
-            
-                
-            
+            .padding()
             
         }
     }
-}
-
-struct RoomCreationView_Previews: PreviewProvider {
-    static var previews: some View {
-        RoomCreationView()
+    
+    func createRoom() {
+        let room = Room(id: UUID().uuidString, name: roomName, tasksID: [""], memberID: [""], lastTaskAdd: nil, password: "" , creatorId: "", rewardCompletion: 3, penaltyFail: 2, maxEditTime: 0)
+        
+        userManager.createRoom(room: room)
+        showRoomCreation.toggle()
+        
     }
 }
+
+//struct RoomCreationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RoomCreationView()
+//    }
+//}

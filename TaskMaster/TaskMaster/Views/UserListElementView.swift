@@ -14,7 +14,6 @@ struct UserListElementView: View {
         VStack(alignment: .leading){
             HStack {
                 Text("User Name")
-                    
                     .font(.title)
                     .fontWeight(.semibold)
                 Button {
@@ -31,12 +30,7 @@ struct UserListElementView: View {
                         Text("Task name")
                             .fontWeight(.thin)
                             .font(.headline)
-                        Image(systemName: "square")//isCompleted? "checkmark.square" : "square")
-                        
-                        //if room.hourLimit < Date().hour {
-                        //button disable task
-                        
-                        //}
+                        Image(systemName: "square")
                         Spacer()//
                     }.padding(.leading, 12)
                     
