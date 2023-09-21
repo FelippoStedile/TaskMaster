@@ -8,10 +8,22 @@
 import Foundation
 import SwiftUI
 
-final class TaskCompletionModel: ObservableObject {
+struct TaskCompletionModel: Hashable {
 
-    @Published var picture: UIImage = UIImage()
-    @Published var taskName: String = "Task Name"
-    @Published var approvals: [Bool] = []
+    var picture: UIImage = UIImage()
+    var taskName: String = "Task Name"
+    var approvals: [Bool] = []
+    
+    init() {
+        self.picture = UIImage()
+        self.approvals = []
+        self.taskName = "Task Default Name"
+    }
+    
+    init(picture: UIImage, taskName: String, approvals: [Bool]) {
+        self.picture = picture
+        self.taskName = taskName
+        self.approvals = approvals
+    }
     
 }

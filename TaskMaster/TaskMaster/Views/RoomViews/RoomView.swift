@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RoomView: View {
     
-   // @StateObject var viewModel: RoomManager = RoomManager()
+    @StateObject var viewModel: RoomViewModel = RoomViewModel()
 
     @Binding var room: Room
     @Binding var showRoom: Bool
@@ -21,7 +21,7 @@ struct RoomView: View {
             VStack(alignment: .leading) {
                 ScrollView(.horizontal){
                     LazyHStack{
-                        ForEach(0..<3) { int in
+                        ForEach(0..<3) { users in
                             UserListElementView()
                         }
                     }
@@ -32,12 +32,12 @@ struct RoomView: View {
                 ScrollView{
                     
                     Button("Upload Task Completion Proof") {
-                       // viewModel.takingPic.toggle()
+                            viewModel.pickingTaskToComplete.toggle()
                     }.padding(.top)
                     
                     Spacer().frame(height: 200)
                 
-                    ForEach(0..<5){ int in
+                    ForEach(viewModel.feed, id: \.self){ taskCompleted in
                         TaskCompletionPost()
                     }
                 }
@@ -52,9 +52,25 @@ struct RoomView: View {
         }
         
 
+//        .sheet(isPresented: $viewModel.pickingTaskToComplete) {
+//        ForEach(0..<3){ userTask in
+//            Button{
+//                viewModel.takingPic.toggle()
+//                //viewModel.selectedTask = userTask
+//            } label: {
+//                //Text(userTask.name)
+//            }
+//
+//        }
+//
 //        .sheet(isPresented: $viewModel.takingPic) {
 //            Camera(selectedImage: $viewModel.newPhoto, sourceType: .camera)
+//
+//                .onDisappear{
+//                    viewModel.feed.insert(TaskCompletionModel(picture: viewModel.newPhoto, taskName: viewModel.selectedTask.taskName, approvals: []), at: 0)
+//                }
 //        }
+//    }
     }
 }
 

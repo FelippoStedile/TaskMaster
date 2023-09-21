@@ -8,9 +8,11 @@
 import Foundation
 import SwiftUI
 
-final class RoomManager: ObservableObject {
+final class RoomViewModel: ObservableObject {
 
     @Published var newPhoto: UIImage = UIImage()
+    @Published var pickingTaskToComplete: Bool = false
+    @Published var selectedTask: TaskModel = TaskModel()
     @Published var takingPic: Bool = false
    
     @Published var feed: [TaskCompletionModel] = []

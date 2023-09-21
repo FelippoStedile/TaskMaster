@@ -78,11 +78,12 @@ extension CloudKitService {
                 
             case .success((let matchResults, _)):
                 do {
-                    if let record = try matchResults.first?.1.get() {
+                    if let record = try matchResults.first?.1.get() { //matchFirst é nil
                         if let data = T(record: record) {
                             completion(.success(data))
                         }
                     } else {
+                        print("ta dando ruim aqui ")
                         completion(.failure(NSError(domain: "Não encotrou usuário", code: 0)))
                     }
                 } catch {

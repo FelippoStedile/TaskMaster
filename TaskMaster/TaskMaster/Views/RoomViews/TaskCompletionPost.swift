@@ -9,18 +9,18 @@ import SwiftUI
 
 struct TaskCompletionPost: View {
     
-    @StateObject var viewModel: TaskCompletionModel = TaskCompletionModel()
+    @State var postModel: TaskCompletionModel = TaskCompletionModel()
     
     var body: some View {
         VStack(alignment: .leading){
-            Text(viewModel.taskName)
+            Text(postModel.taskName)
             HStack{
-                //Image(uiImage: viewModel.picture)
+                //Image(uiImage: postModel.picture)
                 Rectangle()
                     .frame(width: 200, height: 356)
                 VStack{
                     
-                    ForEach(0..<3){ int in
+                    ForEach(0..<3){ user in
                         HStack(alignment: .top){
                             Text("User name")
                                 .font(.footnote)

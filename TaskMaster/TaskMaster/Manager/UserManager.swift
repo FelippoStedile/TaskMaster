@@ -17,7 +17,11 @@ final class UserManager: ObservableObject {
     
     
     
-    @Published var currentUser: User?
+    @Published var currentUser: User? {
+        didSet {
+            print("deu um didSet")
+        }
+    }
     
     @Published var userTasks: [TaskModel] = []
     @Published var userRooms: [Room] = []
@@ -43,8 +47,10 @@ final class UserManager: ObservableObject {
     }
     
     private func handleError(error: Error){
-        errorMessage = error.localizedDescription
-        showAlertError = true
+        DispatchQueue.main.async {
+            self.errorMessage = error.localizedDescription
+            self.showAlertError = true
+        }
     }
         
     private func handleError(error: Error, origin: String = #function) {
@@ -125,8 +131,8 @@ extension UserManager {
             do {
                 var newRoom = room
                 newRoom.creatorId = currentUser!.id
-                let roomRecrod = try  await serviceProvider.saveData(data: newRoom)
-                newRoom.record = roomRecrod
+                let roomRecord = try  await serviceProvider.saveData(data: newRoom)
+                newRoom.record = roomRecord
                 self.userRooms.append(newRoom)
             } catch {
                 print("Error on \(error.localizedDescription)")
