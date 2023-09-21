@@ -128,6 +128,21 @@ extension UserManager {
         }
     }
     
+    func deleteRoom(room: Room){
+//        Task {
+//            do{
+//                try await CloudKitService.shared.delete(data: roomToDelete)
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//        }
+//
+//        self.userRooms.removeAll { room in
+//            room.id == roomToDelete.id
+//        }
+//        
+    }
+    
 }
 
 extension UserManager {

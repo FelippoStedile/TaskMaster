@@ -8,11 +8,7 @@
 import SwiftUI
 
 final class RoomListViewModel: ObservableObject {
-    @Published var selectedRoom: Room? {
-        didSet {
-            print("Mudou essa merda")
-        }
-    }
+    @Published var selectedRoom: Room?
 
 }
 
@@ -27,19 +23,24 @@ struct RoomListView: View {
     var body: some View {
         
         NavigationView {
-            VStack {
+            VStack(alignment: .leading){
                 ScrollView{
-                    VStack{
                         ForEach(userManager.userRooms, id: \.id){ room  in
                             
-                            Text("\(room.name)").onTapGesture {
+                            RoomElementView(room: room, currentUserId: userManager.currentUser!.id)
+                            
+                            .background(
+                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                    .stroke(lineWidth: 1)
+                                    .foregroundColor(.blue)
+                            )
+                            .onTapGesture {
                                 viewModel.selectedRoom = room
                                 showRoom.toggle()
                             }
-                            
-                        }
                         
                     }.padding(.horizontal, 8)
+                        .padding(.vertical, 4)
                 }
                 Spacer()
                 

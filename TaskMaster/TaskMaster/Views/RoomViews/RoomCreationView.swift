@@ -17,6 +17,7 @@ struct RoomCreationView: View {
     @State private var roomName = ""
     @State private var roomPassword = ""
     @State private var creatorId = ""
+    @State var taskSelection: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,28 +33,44 @@ struct RoomCreationView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
-                TextField("Creator ID", text: $creatorId)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Button(action: createRoom) {
+                Button{
+                    taskSelection.toggle()
+                } label: {
                     Text("Create Room")
                         .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
+                        .background(Color.accentColor)
+                        .foregroundColor(Color.primary)
                         .cornerRadius(10)
                 }
             }
             .padding()
             
         }
+        .sheet(isPresented: $taskSelection) {
+                ForEach(userManager.userTasks, id: \.self){ task in
+                        Button {
+                            createRoom(startingTask: task)
+                        } label: {
+                            HStack{
+                                Text(task.taskName)
+                                Image(systemName: "plus")
+                            }
+                        }
+                }
+            }
     }
     
-    func createRoom() {
-        let room = Room(id: UUID().uuidString, name: roomName, tasksID: [""], memberID: [""], lastTaskAdd: nil, password: "" , creatorId: "", rewardCompletion: 3, penaltyFail: 2, maxEditTime: 0)
+    func createRoom(startingTask: TaskModel) {
         
-        userManager.createRoom(room: room)
-        showRoomCreation.toggle()
+        let taskToImport = ImportedTaskModel(taskId: startingTask.id, taskName: startingTask.taskName, picture: UIImage(), approved: false, upvotes: 0)
+        
+        if let me = userManager.currentUser {
+            let room = Room(id: UUID().uuidString, name: roomName, tasksID: [""], memberID: [""], users: UserInRoom(userName: me.name , userId: me.id, score: 0, importedTasks: [taskToImport]), lastTaskAdd: nil, password: "" , creatorId: "", rewardCompletion: 3, penaltyFail: 2, maxEditTime: 0)
+            
+            
+            userManager.createRoom(room: room)
+            showRoomCreation.toggle()
+        }
         
     }
 }

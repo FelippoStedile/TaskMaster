@@ -10,9 +10,11 @@ import SwiftUI
 struct TaskCompletionPost: View {
     
     @State var postModel: TaskCompletionModel
+    @State var users: [UserInRoom]
     
-    init(picture: UIImage, taskName: String, approvals: [Bool] = []) {
+    init(picture: UIImage, taskName: String, approvals: [Bool] = [], users: [UserInRoom]) {
        postModel = TaskCompletionModel(picture: picture, taskName: taskName, approvals: approvals)
+        self.users = users
     }
     
     var body: some View {
@@ -41,6 +43,6 @@ struct TaskCompletionPost: View {
 
 struct TaskCompletionPost_Previews: PreviewProvider {
     static var previews: some View {
-        TaskCompletionPost(picture: UIImage(), taskName: "task default")
+        TaskCompletionPost(picture: UIImage(), taskName: "task default", users: [UserInRoom(userName: "maic", userId: "123", score: 0, importedTasks: [])])
     }
 }
