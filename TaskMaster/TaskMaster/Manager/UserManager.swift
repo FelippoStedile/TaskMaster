@@ -124,19 +124,21 @@ extension UserManager {
                 let roomRecord = try  await serviceProvider.saveData(data: newRoom)
                 newRoom.record = roomRecord
                 self.userRooms.append(newRoom)
-                self.currentUser?.roomIDs.append(newRoom.id)
-                saveRoomInUser(id: newRoom.id)
+                saveRoomInUser(room: room)
             } catch {
                 print("Error on \(error.localizedDescription)")
             }
         }
     }
     
-    func saveRoomInUser(id: String) {
-        guard let currentUser = self.currentUser else {
+    func saveRoomInUser(room: Room) {
+        
+        guard var currentUser = self.currentUser else {
             print("Error on \(#function): User is Nil")
             return
         }
+        
+        currentUser.roomIDs.append(room.id)
         
         Task {
             
@@ -171,6 +173,7 @@ extension UserManager {
             do {
                 try await CloudKitService.shared.update(data: tempRoom)
                 userRooms.append(tempRoom)
+                saveRoomInUser(room: tempRoom)
             } catch {
                 print("Error on \(#function): \(error.localizedDescription)")
             }
