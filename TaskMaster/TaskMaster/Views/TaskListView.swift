@@ -62,6 +62,7 @@ struct TaskListView: View {
                             .padding(.vertical, 8)
                     }
                 }.buttonStyle(.plain)
+                    .padding(.horizontal, 16)
                     .frame(height: 50)
             }
         }

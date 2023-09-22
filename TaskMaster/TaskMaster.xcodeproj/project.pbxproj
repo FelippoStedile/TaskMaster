@@ -35,8 +35,6 @@
 		737C0BD02ABA64E700F9C5CD /* RoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BCF2ABA64E700F9C5CD /* RoomViewModel.swift */; };
 		737C0BD22ABA682C00F9C5CD /* TaskCompletionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737C0BD12ABA682C00F9C5CD /* TaskCompletionModel.swift */; };
 		738468CF2ABCE59B00012CAA /* RoomElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738468CE2ABCE59B00012CAA /* RoomElementView.swift */; };
-		738468D12ABCEB6400012CAA /* UserInRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738468D02ABCEB6400012CAA /* UserInRoomModel.swift */; };
-		738468D32ABCECF100012CAA /* ImportedTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738468D22ABCECF100012CAA /* ImportedTaskModel.swift */; };
 		73F6A3EF2AB505150045AA46 /* WeekEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F6A3EE2AB505150045AA46 /* WeekEnums.swift */; };
 		73FF846D2AB093560082F930 /* TaskMasterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF846C2AB093560082F930 /* TaskMasterApp.swift */; };
 		73FF846F2AB093560082F930 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FF846E2AB093560082F930 /* ContentView.swift */; };
@@ -97,8 +95,6 @@
 		737C0BCF2ABA64E700F9C5CD /* RoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewModel.swift; sourceTree = "<group>"; };
 		737C0BD12ABA682C00F9C5CD /* TaskCompletionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCompletionModel.swift; sourceTree = "<group>"; };
 		738468CE2ABCE59B00012CAA /* RoomElementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomElementView.swift; sourceTree = "<group>"; };
-		738468D02ABCEB6400012CAA /* UserInRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInRoomModel.swift; sourceTree = "<group>"; };
-		738468D22ABCECF100012CAA /* ImportedTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportedTaskModel.swift; sourceTree = "<group>"; };
 		73F6A3EE2AB505150045AA46 /* WeekEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekEnums.swift; sourceTree = "<group>"; };
 		73FF84692AB093560082F930 /* TaskMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaskMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73FF846C2AB093560082F930 /* TaskMasterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskMasterApp.swift; sourceTree = "<group>"; };
@@ -223,8 +219,6 @@
 			isa = PBXGroup;
 			children = (
 				231AAD022AB0B1EE00908FD2 /* Room.swift */,
-				738468D02ABCEB6400012CAA /* UserInRoomModel.swift */,
-				738468D22ABCECF100012CAA /* ImportedTaskModel.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -538,7 +532,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				737C0BCC2ABA571100F9C5CD /* RoomCreationView.swift in Sources */,
-				738468D32ABCECF100012CAA /* ImportedTaskModel.swift in Sources */,
 				231AACEE2AB0A6A900908FD2 /* CloudKitService.swift in Sources */,
 				231AACF52AB0A80300908FD2 /* Data+Extension.swift in Sources */,
 				73F6A3EF2AB505150045AA46 /* WeekEnums.swift in Sources */,
@@ -560,7 +553,6 @@
 				73143E7A2AB2539C008498CC /* TaskViewModel.swift in Sources */,
 				737C0BC12ABA3E5500F9C5CD /* RoomListView.swift in Sources */,
 				737C0BC32ABA3E8800F9C5CD /* RoomView.swift in Sources */,
-				738468D12ABCEB6400012CAA /* UserInRoomModel.swift in Sources */,
 				734026E12AB2089900E46B53 /* TaskListView.swift in Sources */,
 				737C0BD02ABA64E700F9C5CD /* RoomViewModel.swift in Sources */,
 				231AAD122AB0C91300908FD2 /* CreateAccountViewModel.swift in Sources */,

@@ -27,7 +27,7 @@ struct ContentView: View {
                         Text("Room")
                             .tag(PageView.roomListView)
                     }
-                }
+                }.padding(.horizontal, 16)
                 .pickerStyle(.segmented)
                 
                 if page == .taskListView {
