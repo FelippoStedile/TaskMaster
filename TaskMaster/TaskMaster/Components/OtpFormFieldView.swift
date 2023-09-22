@@ -23,6 +23,7 @@ struct OtpFormFieldView: View {
     @State var pinThree: String = ""
     @State var pinFour: String = ""
     @State var pinFive: String = ""
+    @State var showAlert: Bool = false
 
     var search: (String) -> ()
 
@@ -49,7 +50,7 @@ struct OtpFormFieldView: View {
                             }
                         }
                         .focused($pinFocusState, equals: .pinOne)
-
+                    
                     TextField("", text:  $pinTwo)
                         .modifier(OtpModifer(pin:$pinTwo))
                         .onChange(of:pinTwo){newVal in
@@ -106,6 +107,21 @@ struct OtpFormFieldView: View {
                 })
                 .padding(.vertical)
 
+                PasteButton(payloadType: String.self) { strings in
+                    guard let first = strings.first, first.count == 5 else {
+                        showAlert.toggle()
+                        return
+                    }
+
+                    let separatedName = first.map { String($0) }
+
+                    pinOne = separatedName[0]
+                    pinTwo = separatedName[1]
+                    pinThree = separatedName[2]
+                    pinFour = separatedName[3]
+                    pinFive = separatedName[4]
+                }
+                .buttonBorderShape(.capsule)
 
                 Button(action: {
                     let textToSearch: String = pinOne + pinTwo + pinThree + pinFour + pinFive
@@ -122,6 +138,15 @@ struct OtpFormFieldView: View {
                 .background(Color.accentColor)
                 .clipShape(Capsule())
                 .padding()
+            }
+            .alert(isPresented: $showAlert) {
+                
+                Alert(
+                    title: Text("Invalid Room Code"),
+                    message: Text("The entered room code is invalid. Please check and try again."),
+                    dismissButton: .default(Text("Got it!"))
+                )
+
             }
 
     }

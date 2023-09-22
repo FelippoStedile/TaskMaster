@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Combine
-
 struct OtpModifer: ViewModifier {
 
     @Binding var pin : String
