@@ -87,7 +87,7 @@ struct RoomCreationView: View {
         let taskToImport = ImportedTaskModel(taskId: startingTask.id, taskIcon: UIImage(systemName: "book.circle")!, taskName: startingTask.taskName, picture: UIImage(), approved: false, upvotes: 0)
         
         let roomCode = CodeGenerator.shared.generate6DigitHash()
-        
+        print(roomCode)
         if let me = userManager.currentUser {
             let room = Room(id: UUID().uuidString, roomCode: roomCode, name: roomName, tasksID: [""], memberID: [""], users: UserInRoom(userName: me.name , userId: me.id, score: 0, importedTasks: [taskToImport]), lastTaskAdd: nil, password: "" , creatorId: "", rewardCompletion: 3, penaltyFail: 2, maxEditTime: 0)
             

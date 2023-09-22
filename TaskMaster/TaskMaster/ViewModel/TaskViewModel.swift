@@ -86,8 +86,14 @@ final class TaskManager: ObservableObject {
             
             if let numDaysUnwrap = numDays {
                 let result = (1 - Float(numDaysUnwrap)/30.0)
-                if result > 0 {
-                    return result
+                if result < 1{
+                    if result > 0 {
+                        return result
+                    } else {
+                        return 0.0
+                    }
+                } else {
+                    return 1.0
                 }
             }
         return 0.0
