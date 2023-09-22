@@ -130,7 +130,7 @@ struct RoomView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 20)
                                 .inset(by: -1)
-                                .stroke(.primary)
+                                .stroke(Color.primary)
                         )
                         
                     } else {
@@ -151,7 +151,7 @@ struct RoomView: View {
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 20)
                                         .inset(by: -1)
-                                        .stroke(.blue)
+                                        .stroke(Color.accentColor)
                                 )
                         }
                         .padding(.horizontal, 8)

@@ -26,7 +26,7 @@ struct CheckBoxCircle: View {
                             .frame(width: 20, height: 20)
                         Circle()
                             .frame(width: 15, height: 15)
-                            .foregroundColor(self.checked ? .blue : Color("antiPrimary"))
+                            .foregroundColor(self.checked ? .accentColor : Color("antiPrimary"))
                     }
                     Text("Due Date")
                 }

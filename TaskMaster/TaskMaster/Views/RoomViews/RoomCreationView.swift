@@ -72,7 +72,7 @@ struct RoomCreationView: View {
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
                                     .inset(by: -1)
-                                    .stroke(.blue)
+                                    .stroke(Color.accentColor)
                             )
                     }.padding(.horizontal, 8)
                         .padding(.vertical, 10)

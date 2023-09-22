@@ -119,7 +119,7 @@ struct OtpFormFieldView: View {
                     Spacer()
                 })
                 .padding(15)
-                .background(Color.blue)
+                .background(Color.accentColor)
                 .clipShape(Capsule())
                 .padding()
             }

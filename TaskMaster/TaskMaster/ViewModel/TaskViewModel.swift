@@ -66,7 +66,7 @@ final class TaskManager: ObservableObject {
     
     func containsWeekDay(day: Week) -> Color {
         if self.task.weekDays.contains(day.rawValue) {
-            return .blue
+            return .accentColor
         } else {
             return .primary
         }
@@ -75,7 +75,7 @@ final class TaskManager: ObservableObject {
     func containsMonthDay(day: Int) -> Color {
         
         if self.task.monthDays.contains(day) {
-            return .blue
+            return .accentColor
         } else {
             return .primary
         }

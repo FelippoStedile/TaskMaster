@@ -21,7 +21,7 @@ struct TaskListView: View {
                             .background(
                                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                                     .stroke(lineWidth: 1)
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.accentColor)
                             )
                     }
                     
