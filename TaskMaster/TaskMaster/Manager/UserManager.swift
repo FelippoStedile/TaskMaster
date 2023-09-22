@@ -128,6 +128,35 @@ extension UserManager {
         }
     }
     
+    func joinInRoom(password: String, room: Room) {
+        guard password == room.password else {
+            print("Senha Inválida")
+            return
+        }
+        
+        guard let userID = currentUser?.id else {
+            print("currentUser is nil")
+            return
+        }
+        
+        guard !room.memberID.contains(userID) else {
+            print("Usuário já está na sala")
+            return
+        }
+        
+        var tempRoom = room
+        tempRoom.lastTaskAdd = Date.now
+        tempRoom.memberID.append(userID)
+        Task {
+            do {
+                try await CloudKitService.shared.update(data: tempRoom)
+                userRooms.append(tempRoom)
+            } catch {
+                print("Error on \(#function): \(error.localizedDescription)")
+            }
+        }
+    }
+    
     func deleteRoom(room: Room){
 //        Task {
 //            do{

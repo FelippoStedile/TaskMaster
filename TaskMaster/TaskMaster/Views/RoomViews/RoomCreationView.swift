@@ -89,7 +89,7 @@ struct RoomCreationView: View {
         let roomCode = CodeGenerator.shared.generate6DigitHash()
         print(roomCode)
         if let me = userManager.currentUser {
-            let room = Room(id: UUID().uuidString, roomCode: roomCode, name: roomName, tasksID: [""], memberID: [""], users: UserInRoom(userName: me.name , userId: me.id, score: 0, importedTasks: [taskToImport]), lastTaskAdd: nil, password: "" , creatorId: "", rewardCompletion: 3, penaltyFail: 2, maxEditTime: 0)
+            let room = Room(id: UUID().uuidString, roomCode: roomCode, name: roomName, tasksID: [startingTask.id], memberID: [""], users: UserInRoom(userName: me.name , userId: me.id, score: 0, importedTasks: [taskToImport]), lastTaskAdd: nil, password: "" , creatorId: "", rewardCompletion: 3, penaltyFail: 2, maxEditTime: 0)
             
             
             userManager.createRoom(room: room)

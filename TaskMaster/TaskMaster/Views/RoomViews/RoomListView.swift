@@ -76,17 +76,24 @@ struct RoomListView: View {
                             Spacer()
                             Text("\(room.memberID.count) members")
                         }
-                        HStack {
-                            TextField("Password", text: $password)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                //.padding(4)
-                            Spacer()
-                            Button {
-                                
-                            } label: {
-                                Text("Join")
-                            }.padding(.trailing, 4)
+                        
+                        
+                        if isUserInRoom(room: room) {
+                            Text("Você já está na sala")
+                        } else {
+                            HStack {
+                                TextField("Password", text: $password)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    //.padding(4)
+                                Spacer()
+                                Button {
+                                    userManager.joinInRoom(password: password, room: roomsSearched.first!)
+                                } label: {
+                                    Text("Join")
+                                }.padding(.trailing, 4)
+                            }
                         }
+
                     }
                     .padding(12)
                     .background(
@@ -99,6 +106,14 @@ struct RoomListView: View {
         }
     }
     
+    func isUserInRoom(room: Room?) -> Bool {
+        guard let userID = userManager.currentUser?.id, let room = room else {
+            print("Error \(#function): user is nil")
+            return false
+        }
+        
+        return room.memberID.contains(userID) || room.creatorId == userID
+    }
     
     func searchRooms(roomCode: String) {
         let predicade = NSPredicate(format: "roomCode == %@", roomCode)
