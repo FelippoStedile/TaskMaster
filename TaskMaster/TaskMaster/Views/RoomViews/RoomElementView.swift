@@ -60,6 +60,6 @@ struct RoomElementView: View {
 
 struct RoomElementView_Previews: PreviewProvider {
     static var previews: some View {
-        RoomElementView(room: Room(id: "122", name: "none", users: UserInRoom(userName: "alguem", userId: "123", score: 0, importedTasks: [])), currentUserId: "lo")
+        RoomElementView(room: Room(id: "122", roomCode: "1323", name: "none", users: UserInRoom(userName: "alguem", userId: "123", score: 0, importedTasks: [])), currentUserId: "lo")
     }
 }

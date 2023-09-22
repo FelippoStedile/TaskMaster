@@ -17,6 +17,9 @@
 		231AAD082AB0C03400908FD2 /* ServiceProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AAD072AB0C03400908FD2 /* ServiceProviders.swift */; };
 		231AAD102AB0C8FC00908FD2 /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AAD0F2AB0C8FC00908FD2 /* CreateAccountView.swift */; };
 		231AAD122AB0C91300908FD2 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231AAD112AB0C91300908FD2 /* CreateAccountViewModel.swift */; };
+		23E10A4C2ABDB22D00C6C76B /* CodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E10A4B2ABDB22D00C6C76B /* CodeGenerator.swift */; };
+		23E10A4F2ABDB3E500C6C76B /* RoomCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E10A4E2ABDB3E500C6C76B /* RoomCodeView.swift */; };
+		23E10A512ABDBCAD00C6C76B /* OtpFormFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E10A502ABDBCAD00C6C76B /* OtpFormFieldView.swift */; };
 		73143E7A2AB2539C008498CC /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73143E792AB2539C008498CC /* TaskViewModel.swift */; };
 		734026DD2AB1F44600E46B53 /* CheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734026DC2AB1F44600E46B53 /* CheckBoxButton.swift */; };
 		734026DF2AB1FB3300E46B53 /* TextLengthMod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734026DE2AB1FB3300E46B53 /* TextLengthMod.swift */; };
@@ -76,6 +79,9 @@
 		231AAD072AB0C03400908FD2 /* ServiceProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProviders.swift; sourceTree = "<group>"; };
 		231AAD0F2AB0C8FC00908FD2 /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
 		231AAD112AB0C91300908FD2 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
+		23E10A4B2ABDB22D00C6C76B /* CodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeGenerator.swift; sourceTree = "<group>"; };
+		23E10A4E2ABDB3E500C6C76B /* RoomCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCodeView.swift; sourceTree = "<group>"; };
+		23E10A502ABDBCAD00C6C76B /* OtpFormFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpFormFieldView.swift; sourceTree = "<group>"; };
 		73143E792AB2539C008498CC /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		734026DC2AB1F44600E46B53 /* CheckBoxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxButton.swift; sourceTree = "<group>"; };
 		734026DE2AB1FB3300E46B53 /* TextLengthMod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLengthMod.swift; sourceTree = "<group>"; };
@@ -248,6 +254,31 @@
 			path = CreateAccount;
 			sourceTree = "<group>";
 		};
+		23E10A492ABDB21200C6C76B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				23E10A4A2ABDB21800C6C76B /* Common */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		23E10A4A2ABDB21800C6C76B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				23E10A4B2ABDB22D00C6C76B /* CodeGenerator.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		23E10A4D2ABDB3D400C6C76B /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				23E10A4E2ABDB3E500C6C76B /* RoomCodeView.swift */,
+				23E10A502ABDBCAD00C6C76B /* OtpFormFieldView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		73143E782AB25374008498CC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +343,8 @@
 		73FF846B2AB093560082F930 /* TaskMaster */ = {
 			isa = PBXGroup;
 			children = (
+				23E10A4D2ABDB3D400C6C76B /* Components */,
+				23E10A492ABDB21200C6C76B /* Helpers */,
 				73FF846E2AB093560082F930 /* ContentView.swift */,
 				73143E782AB25374008498CC /* ViewModel */,
 				73FF849E2AB0A9ED0082F930 /* Views */,
@@ -509,6 +542,7 @@
 				231AACEE2AB0A6A900908FD2 /* CloudKitService.swift in Sources */,
 				231AACF52AB0A80300908FD2 /* Data+Extension.swift in Sources */,
 				73F6A3EF2AB505150045AA46 /* WeekEnums.swift in Sources */,
+				23E10A4F2ABDB3E500C6C76B /* RoomCodeView.swift in Sources */,
 				734026DD2AB1F44600E46B53 /* CheckBoxButton.swift in Sources */,
 				734026DF2AB1FB3300E46B53 /* TextLengthMod.swift in Sources */,
 				737C0BCE2ABA62C300F9C5CD /* CameraModel.swift in Sources */,
@@ -518,6 +552,7 @@
 				73FF849D2AB09AB50082F930 /* User.swift in Sources */,
 				73FF846D2AB093560082F930 /* TaskMasterApp.swift in Sources */,
 				737C0BCA2ABA48F800F9C5CD /* TaskCompletionPost.swift in Sources */,
+				23E10A4C2ABDB22D00C6C76B /* CodeGenerator.swift in Sources */,
 				73FF84A02AB0ADF00082F930 /* TaskView.swift in Sources */,
 				738468CF2ABCE59B00012CAA /* RoomElementView.swift in Sources */,
 				73FF849A2AB096B70082F930 /* TaskModel.swift in Sources */,
@@ -537,6 +572,7 @@
 				736CCC1F2AB48F4400076CE2 /* TaskListViewModel.swift in Sources */,
 				231AAD102AB0C8FC00908FD2 /* CreateAccountView.swift in Sources */,
 				231AAD082AB0C03400908FD2 /* ServiceProviders.swift in Sources */,
+				23E10A512ABDBCAD00C6C76B /* OtpFormFieldView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

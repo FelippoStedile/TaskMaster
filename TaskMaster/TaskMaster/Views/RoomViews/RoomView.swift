@@ -43,14 +43,14 @@ struct RoomView: View {
                         }
                     }
                     
-                    ForEach(room.users, id: \.self) { user in
-                        Button {
-                            viewModel.tasksFromAUser.toggle()
-                            viewModel.userSelected = user
-                        } label: {
-                            UserListElementView(userName: user.userName, userScore: room.fetchScoreById(id: user.userId))
-                        }.buttonStyle(.plain)
-                    }
+//                    ForEach(room.users, id: \.self) { user in
+//                        Button {
+//                            viewModel.tasksFromAUser.toggle()
+//                            viewModel.userSelected = user
+//                        } label: {
+//                            UserListElementView(userName: user.userName, userScore: room.fetchScoreById(id: user.userId))
+//                        }.buttonStyle(.plain)
+//                    }
                 }
             }
             .frame(height: 60)
@@ -62,7 +62,7 @@ struct RoomView: View {
                     Spacer().frame(height: 200)
                     
                     ForEach(viewModel.feed, id: \.self){ taskCompleted in
-                        TaskCompletionPost(picture: taskCompleted.picture, taskName: taskCompleted.taskName, users: room.users)
+//                        TaskCompletionPost(picture: taskCompleted.picture, taskName: taskCompleted.taskName, users: room.users)
                     }
                 }
                 
