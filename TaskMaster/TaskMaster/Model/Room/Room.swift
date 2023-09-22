@@ -115,7 +115,7 @@ struct Room: Recordable, Hashable {
     
     func importedFromId(userId: String, taskId: String) -> ImportedTaskModel {
       //  let userInRoom = users.first(where: {$0.userId == userId})
-        var taskToReturn: ImportedTaskModel = ImportedTaskModel(taskId: "deu ruim", taskName: "deu Ruim", picture: UIImage(), approved: false, upvotes: 0)
+        var taskToReturn: ImportedTaskModel = ImportedTaskModel(taskId: "deu ruim", taskIcon: UIImage(systemName: "book.circle")!, taskName: "deu Ruim", picture: UIImage(), approved: false, upvotes: 0)
 //        if userInRoom != nil {
 //            userInRoom!.importedTasks.forEach { task in
 //                if task.taskId == taskId{

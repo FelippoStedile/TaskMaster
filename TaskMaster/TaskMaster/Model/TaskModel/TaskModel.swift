@@ -15,15 +15,17 @@ struct TaskModel: Recordable {
     
     var taskName: String
     var icon: Image = Image(systemName:"book.circle") //Data não mockada
+    //var icon: UIImage = UIImage(systemName:"book.circle")!
     var selectedPeriod: Period
     var monthDays: [Int] = [-1]
     var weekDays: [Int] = [-1]
     var dueDate: Date = Date.distantPast
     
-    init(id: String, ownerID: String, taskName: String, selectedPeriod: Period, monthDays: [Int], weekDays: [Int], dueDate: Date, record: CKRecord? = nil) {
+    init(id: String, ownerID: String, taskName: String, /*icon: UIImage,*/ selectedPeriod: Period, monthDays: [Int], weekDays: [Int], dueDate: Date, record: CKRecord? = nil) {
         self.id = id
         self.ownerID = ownerID
         self.taskName = taskName
+        //self.icon = icon
         self.selectedPeriod = selectedPeriod
         self.monthDays = monthDays
         self.weekDays = weekDays
@@ -35,6 +37,7 @@ struct TaskModel: Recordable {
         self.id = UUID().uuidString
         self.ownerID = ""
         self.taskName = ""
+        //self.icon = UIImage(systemName: "book.circle")!
         self.selectedPeriod = .weekly
     }
     

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ImportedTaskModel: Hashable {
     var taskId: String
+    var taskIcon: UIImage
     var taskName: String
     var picture: UIImage
     var approved: Bool

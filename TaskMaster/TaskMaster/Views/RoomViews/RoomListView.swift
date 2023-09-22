@@ -25,26 +25,24 @@ struct RoomListView: View {
     @State var roomsSearched: [Room] = []
     
     var body: some View {
-        
-        NavigationView {
-            VStack(alignment: .leading){
+            VStack{
                 ScrollView{
-                    ForEach(userManager.userRooms, id: \.id){ room  in
-                        
-                        RoomElementView(room: room, currentUserId: userManager.currentUser!.id)
-                        
-                            .background(
-                                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                    .stroke(lineWidth: 1)
-                                    .foregroundColor(.blue)
-                            )
-                            .onTapGesture {
-                                viewModel.selectedRoom = room
-                                showRoom.toggle()
-                            }
-                        
+                        ForEach(userManager.userRooms, id: \.id){ room  in
+                            
+                            RoomElementView(room: room, currentUserId: userManager.currentUser!.id)
+                            
+                                .background(
+                                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                        .stroke(lineWidth: 1)
+                                        .foregroundColor(.blue)
+                                )
+                                .onTapGesture {
+                                    viewModel.selectedRoom = room
+                                    showRoom.toggle()
+                                }
                     }.padding(.horizontal, 8)
-                        .padding(.vertical, 4)
+                            .padding(.vertical, 4)
+                    
                 }
                 Spacer()
                 
@@ -52,7 +50,6 @@ struct RoomListView: View {
                 createRoomButton()
                 
             }
-        }
         .sheet(isPresented: $isCreating) {
             RoomCreationView(showRoomCreation: $isCreating)
                 .environmentObject(userManager)

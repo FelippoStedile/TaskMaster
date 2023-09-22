@@ -48,6 +48,7 @@ struct TaskView: View {
                         Spacer()
                         Button("Cancel") {
                             viewModel.task.taskName = task.taskName
+                            //viewModel.task.icon = task.icon
                             viewModel.task.dueDate = task.dueDate
                             viewModel.task.monthDays = task.monthDays
                             viewModel.task.weekDays = task.weekDays
@@ -68,10 +69,21 @@ struct TaskView: View {
                 }
             }
             HStack {
-                Image(systemName: "book.circle")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50)
+                /*if editing{
+                    Button{
+                        viewModel.task.icon = UIImage(systemName: "book.circle")!
+                    } label: {
+                        Image(systemName: "paintbrush")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 40)
+                    }
+                } else {*/
+                    Image(/*uiImage: viewModel.task.icon*/ systemName: "book.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40)
+                //}
                 
                 if editing {
                     TextField("Task Name:", text: $viewModel.task.taskName, axis: .vertical)
@@ -262,6 +274,7 @@ struct TaskView: View {
             if viewModel.task.dueDate > Date.distantPast {
                 viewModel.dueBool = true
             }
+            //viewModel.task.icon = task.icon
             viewModel.task.monthDays = task.monthDays
             viewModel.task.weekDays = task.weekDays
             viewModel.task.selectedPeriod = task.selectedPeriod

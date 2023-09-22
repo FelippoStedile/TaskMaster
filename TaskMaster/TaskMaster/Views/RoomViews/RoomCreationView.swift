@@ -47,22 +47,44 @@ struct RoomCreationView: View {
             
         }
         .sheet(isPresented: $taskSelection) {
+            VStack {
+                Text("Import one of your tasks to track.")
+                    .padding(.top, 32)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                Spacer()
+                    
                 ForEach(userManager.userTasks, id: \.self){ task in
-                        Button {
-                            createRoom(startingTask: task)
-                        } label: {
-                            HStack{
-                                Text(task.taskName)
-                                Image(systemName: "plus")
-                            }
-                        }
+                    Button {
+                        createRoom(startingTask: task)
+                    } label: {
+                        HStack{
+                            Image(/*uiImage: task.icon*/ systemName: "book.circle")
+                                .padding(.leading, 8)
+                            Text(task.taskName)
+                            Spacer()
+                            
+                            Image(systemName: "plus")
+                                .padding(.trailing, 8)
+                        }.padding(.vertical, 4)
+                            .background(Color("antiPrimary"))
+                            .cornerRadius(20)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .inset(by: -1)
+                                    .stroke(.blue)
+                            )
+                    }.padding(.horizontal, 8)
+                        .padding(.vertical, 10)
                 }
+                Spacer()
             }
+        }
     }
     
     func createRoom(startingTask: TaskModel) {
         
-        let taskToImport = ImportedTaskModel(taskId: startingTask.id, taskName: startingTask.taskName, picture: UIImage(), approved: false, upvotes: 0)
+        let taskToImport = ImportedTaskModel(taskId: startingTask.id, taskIcon: UIImage(systemName: "book.circle")!, taskName: startingTask.taskName, picture: UIImage(), approved: false, upvotes: 0)
         
         let roomCode = CodeGenerator.shared.generate6DigitHash()
         

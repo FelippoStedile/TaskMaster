@@ -32,7 +32,7 @@ struct OtpModifer: ViewModifier {
             .background(Color.gray.cornerRadius(5))
             .background(
                 RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color("blueColor"), lineWidth: 2)
+                    //.stroke(.blue, lineWidth: 2)
             )
     }
     

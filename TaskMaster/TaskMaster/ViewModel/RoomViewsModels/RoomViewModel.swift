@@ -12,7 +12,7 @@ final class RoomViewModel: ObservableObject {
 
     @Published var newPhoto: UIImage = UIImage()
     @Published var pickingTaskToComplete: Bool = false
-    @Published var selectedTask: ImportedTaskModel = ImportedTaskModel(taskId: "", taskName: "", picture: UIImage(), approved: false, upvotes: 0)
+    @Published var selectedTask: ImportedTaskModel = ImportedTaskModel(taskId: "", taskIcon: UIImage(systemName: "book.circle")!, taskName: "", picture: UIImage(), approved: false, upvotes: 0)
     @Published var takingPic: Bool = false
     @Published var tasksFromAUser: Bool = false
     @Published var userSelected: UserInRoom?

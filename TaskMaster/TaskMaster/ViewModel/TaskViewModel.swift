@@ -113,7 +113,7 @@ final class TaskManager: ObservableObject {
             self.task.dueDate = Date.distantPast
         }
         
-        var taskCreated = TaskModel(id: UUID().uuidString, ownerID: userID, taskName: self.task.taskName, selectedPeriod: self.task.selectedPeriod, monthDays: self.task.monthDays, weekDays: self.task.weekDays, dueDate: self.task.dueDate)
+        var taskCreated = TaskModel(id: UUID().uuidString, ownerID: userID, taskName: self.task.taskName, /*icon: self.task.icon,*/ selectedPeriod: self.task.selectedPeriod, monthDays: self.task.monthDays, weekDays: self.task.weekDays, dueDate: self.task.dueDate)
 
                 CloudKitService.shared.saveData(data: taskCreated) { result in
                     DispatchQueue(label: "vrau").async {
@@ -148,7 +148,7 @@ final class TaskManager: ObservableObject {
             self.task.dueDate = Date.distantPast
         }
         
-        let taskUpdated = TaskModel(id: self.task.id, ownerID: userID ,taskName: self.task.taskName, selectedPeriod: self.task.selectedPeriod, monthDays: self.task.monthDays, weekDays: self.task.weekDays, dueDate: self.task.dueDate, record: record)
+        let taskUpdated = TaskModel(id: self.task.id, ownerID: userID ,taskName: self.task.taskName, /*icon: self.task.icon,*/ selectedPeriod: self.task.selectedPeriod, monthDays: self.task.monthDays, weekDays: self.task.weekDays, dueDate: self.task.dueDate, record: record)
         
         Task {
             do{
@@ -177,6 +177,7 @@ final class TaskManager: ObservableObject {
         
         self.task.dueDate = Date.distantPast
         self.task.taskName = ""
+        //self.task.icon = UIImage(systemName: "book.circle")!
         self.task.weekDays = [-1]
         self.task.monthDays = [-1]
         self.task.selectedPeriod = .weekly

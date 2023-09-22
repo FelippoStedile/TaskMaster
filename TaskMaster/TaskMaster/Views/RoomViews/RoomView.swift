@@ -44,6 +44,7 @@ struct RoomView: View {
                     }
                     
 //                    ForEach(room.users, id: \.self) { user in
+//                        if user.userId != userManager.currentUser?.id{
 //                        Button {
 //                            viewModel.tasksFromAUser.toggle()
 //                            viewModel.userSelected = user
@@ -51,6 +52,7 @@ struct RoomView: View {
 //                            UserListElementView(userName: user.userName, userScore: room.fetchScoreById(id: user.userId))
 //                        }.buttonStyle(.plain)
 //                    }
+//                  }
                 }
             }
             .frame(height: 60)
@@ -113,19 +115,47 @@ struct RoomView: View {
                 ForEach(userManager.userTasks, id: \.self){ task in
                     if room.containsTask(id: userSelected.userId, taskId: task.id){
                         let importedTask = room.importedFromId(userId: userSelected.userId, taskId: task.id)
+                        
                         HStack{
+                            Image(uiImage: importedTask.taskIcon)
+                                .padding(.leading, 8)
                             Text(importedTask.taskName)
+                            Spacer()
                             Image(systemName: importedTask.approved ? "checkmark.square" : "square")
+                                .padding(.trailing, 8)
                         }
+                        .padding(.vertical, 12)
+                        .background(Color("grayBackGround"))
+                        .cornerRadius(20)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .inset(by: -1)
+                                .stroke(.primary)
+                        )
+                        
                     } else {
                         Button {
                             room.importTask(task: task, userId: userSelected.userId)
                         } label: {
                             HStack{
+                                Image(/*uiImage: task.icon*/ systemName: "book.circle")
+                                    .padding(.leading, 8)
                                 Text(task.taskName)
+                                Spacer()
+                                
                                 Image(systemName: "plus")
-                            }
+                                    .padding(.trailing, 8)
+                            }.padding(.vertical, 4)
+                                .background(Color("antiPrimary"))
+                                .cornerRadius(20)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .inset(by: -1)
+                                        .stroke(.blue)
+                                )
                         }
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 10)
                         
                     }
                 }
