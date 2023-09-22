@@ -19,9 +19,7 @@ final class UserManager: ObservableObject {
     
     @Published var userTasks: [TaskModel] = []
     @Published var userRooms: [Room] = []
-    
-    var userID: String?
-    
+        
     @Published var showAlertError: Bool = false
     @Published var errorMessage: String = ""
     
@@ -70,12 +68,17 @@ final class UserManager: ObservableObject {
             print("Error on \(#function): UserID is nil")
             return
         }
-        let predicate = NSPredicate(format: "creatorId == %@", userID)
+        
+        let predicate = NSPredicate(format: "memberID CONTAINS %@", userID)
+            
         CloudKitService.shared.fetchFilteredData(predicate: predicate, type: Room.self) { result in
             switch result {
-            case .success(let userRooms):
+            case .success(let rooms):
                 DispatchQueue.main.async {
-                    self.userRooms = userRooms
+                    let roomSorted = rooms.sorted { room, room in
+                        room.creatorId == userID
+                    }
+                    self.userRooms.append(contentsOf: roomSorted)
                 }
             case .failure(let error):
                 self.handleError(error: error)
@@ -118,12 +121,29 @@ extension UserManager {
         Task {
             do {
                 var newRoom = room
-                newRoom.creatorId = currentUser!.id
                 let roomRecord = try  await serviceProvider.saveData(data: newRoom)
                 newRoom.record = roomRecord
                 self.userRooms.append(newRoom)
+                self.currentUser?.roomIDs.append(newRoom.id)
+                saveRoomInUser(id: newRoom.id)
             } catch {
                 print("Error on \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func saveRoomInUser(id: String) {
+        guard let currentUser = self.currentUser else {
+            print("Error on \(#function): User is Nil")
+            return
+        }
+        
+        Task {
+            
+            do {
+                try await CloudKitService.shared.update(data: currentUser)
+            } catch {
+                print("Error on \(#function): \(error.localizedDescription)")
             }
         }
     }
