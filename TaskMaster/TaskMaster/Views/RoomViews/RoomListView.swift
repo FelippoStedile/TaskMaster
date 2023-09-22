@@ -23,6 +23,7 @@ struct RoomListView: View {
     @State var showSearchRoom: Bool = false
     @State var roomToSearch: String = ""
     @State var roomsSearched: [Room] = []
+    @State var password: String = ""
     
     var body: some View {
             VStack{
@@ -62,14 +63,38 @@ struct RoomListView: View {
         }.sheet(isPresented: $showSearchRoom) {
             VStack(alignment: .center) {
                 
-                ForEach(roomsSearched, id: \.self) { room in
-                    Text("Room: \(room.name)")
-                }
-                
                 OtpFormFieldView() { search in
                     searchRooms(roomCode: search)
                 }
 
+                ForEach(roomsSearched, id: \.self) { room in
+                    VStack{
+                        HStack{
+                            Text(room.name)
+                                .font(.title)
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Text("\(room.memberID.count) members")
+                        }
+                        HStack {
+                            TextField("Password", text: $password)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                //.padding(4)
+                            Spacer()
+                            Button {
+                                
+                            } label: {
+                                Text("Join")
+                            }.padding(.trailing, 4)
+                        }
+                    }
+                    .padding(12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(lineWidth: 1)
+                            .foregroundColor(.accentColor)
+                    )
+                }.padding(.horizontal, 12)
             }
         }
     }

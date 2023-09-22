@@ -107,17 +107,18 @@ struct OtpFormFieldView: View {
                 .padding(.vertical)
 
 
-                Button(action: {
+                Button {
                     let textToSearch: String = pinOne + pinTwo + pinThree + pinFour + pinFive
                     search(textToSearch)
-                }, label: {
+                    
+                } label: {
                     Spacer()
                     Text("Search")
                         .font(.system(.title3, design: .rounded))
                         .fontWeight(.semibold)
                         .foregroundColor(Color(uiColor: UIColor.label))
                     Spacer()
-                })
+                }
                 .padding(15)
                 .background(Color.accentColor)
                 .clipShape(Capsule())
