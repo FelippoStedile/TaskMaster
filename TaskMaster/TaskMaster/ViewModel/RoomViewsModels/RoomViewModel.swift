@@ -36,7 +36,7 @@ final class RoomViewModel: ObservableObject {
     @Published var userSelected: UserInRoom?
     @Published var taskImporter: Bool = false
     @Published var users: [UserInRoom] = []
-   
+    @Published var currentUser: UserInRoom?
     @Published var feed: [TaskCompletionModel] = []
     
     
@@ -44,6 +44,7 @@ final class RoomViewModel: ObservableObject {
         
         userIds.forEach { userId in
             
+            #warning("pegar todos os usuarios da sala, passalos para a estrutura UserInRoom e colocar no vetor aqui de users")
             //let user = cloudkit.Shared.pegaUser
             //var tasksImported = []
             //user.tasks.forEach { taskID in
@@ -54,9 +55,58 @@ final class RoomViewModel: ObservableObject {
             //}
             
             //let userFetched = UserInRoom(userName: <#T##String#>, userId: <#T##String#>, score: <#T##Int#>, importedTasks: tasksImported)
-            //users.append(<#T##newElement: UserInRoom##UserInRoom#>)
+            //viewModel.users.append(<#T##newElement: UserInRoom##UserInRoom#>)
+            
+            
         }
         
     }
     
+    func setCurrentUser(myId: String) {
+        self.currentUser = fetchUserById(id: myId)
+        
+    }
+    
+    func fetchUserById (id: String ) -> UserInRoom? {
+        let userToSearch = users.first(where: {$0.userId == id})
+    
+        return userToSearch
+    }
+    
+    func fetchScoreById(id: String) -> Int {
+      //  let userInRoom = users.first(where: {$0.userId == id})
+        return 0//userInRoom?.score ?? 0
+    }
+    
+    func containsTask(taskId: String) -> Bool {
+        var value = false
+        if let tasks = currentUser?.importedTasks {
+            tasks.forEach { task in
+                if task.taskId == taskId{
+                    value = true
+                }
+            }
+            return value
+        }
+        return value
+    }
+    
+    func importTask(task: TaskModel) {
+        let taskToImport = ImportedTaskModel(taskId: task.id, taskIcon: UIImage(systemName: "book.circle")!, taskName: task.taskName, picture: UIImage(), approved: false, upvotes: 0)
+        
+        self.currentUser?.importedTasks.append(taskToImport)
+        
+//        self.users.forEach { user in
+//            if user.userId == currentUser?.userId {
+//                user.importedTasks.append(taskToImport)
+//            }
+//        }//n rola aqui pq n pego o verdadeiro vetor aparentemente
+
+        #warning("fazer update do banco aqui, pra mudar qnd o cara importa uma task, ou, fazer outra funcao pra ser chamada qnd ele sai da sala e faz o update só uma vez daí")
+        
+    }
+
+    func addPhoto(userName: String) {
+        self.feed.insert(TaskCompletionModel(picture: self.newPhoto, taskName: self.selectedTask.taskName, approvals: [userName]), at: 0)
+    }
 }

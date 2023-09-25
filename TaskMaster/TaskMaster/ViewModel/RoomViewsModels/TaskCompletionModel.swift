@@ -12,7 +12,7 @@ struct TaskCompletionModel: Hashable {
 
     var picture: UIImage = UIImage()
     var taskName: String = "Task Name"
-    var approvals: [Bool] = []
+    var approvals: [String] = []
     
 //    init() {
 //        self.picture = UIImage()
@@ -20,7 +20,7 @@ struct TaskCompletionModel: Hashable {
 //        self.taskName = "Task Default Name"
 //    }
     
-    init(picture: UIImage, taskName: String, approvals: [Bool]) {
+    init(picture: UIImage, taskName: String, approvals: [String]) {
         self.picture = picture
         self.taskName = taskName
         self.approvals = approvals

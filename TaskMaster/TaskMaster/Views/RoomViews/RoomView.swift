@@ -36,23 +36,26 @@ struct RoomView: View {
                 LazyHStack{
                     if let myUser = userManager.currentUser {
                         Button {
-                            viewModel.taskImporter.toggle()
-                            viewModel.userSelected = UserInRoom(userName: myUser.name, userId: myUser.id, score: room.fetchScoreById(id: myUser.id), importedTasks: room.fetchUserById(id: myUser.id).importedTasks)
+                            //viewModel.userSelected = viewModel.currentUser
+                            if let selectedMe = viewModel.fetchUserById(id: myUser.id) {
+                                viewModel.userSelected = selectedMe
+                                viewModel.taskImporter.toggle()
+                            }
                         } label: {
-                            UserListElementView(userName: myUser.name, userScore: room.fetchScoreById(id: myUser.id))
+                            UserListElementView(userName: myUser.name, userScore: viewModel.fetchScoreById(id: myUser.id))
                         }
                     }
                     
-//                    ForEach(room.users, id: \.self) { user in
-//                        if user.userId != userManager.currentUser?.id{
-//                        Button {
-//                            viewModel.tasksFromAUser.toggle()
-//                            viewModel.userSelected = user
-//                        } label: {
-//                            UserListElementView(userName: user.userName, userScore: room.fetchScoreById(id: user.userId))
-//                        }.buttonStyle(.plain)
-//                    }
-//                  }
+                    ForEach(viewModel.users, id: \.self) { user in
+                        if user.userId != userManager.currentUser?.id{
+                        Button {
+                            viewModel.userSelected = user
+                            viewModel.tasksFromAUser.toggle()
+                        } label: {
+                            UserListElementView(userName: user.userName, userScore: viewModel.fetchScoreById(id: user.userId))
+                        }.buttonStyle(.plain)
+                    }
+                  }
                 }
             }
             .frame(height: 60)
@@ -64,7 +67,7 @@ struct RoomView: View {
                     Spacer().frame(height: 200)
                     
                     ForEach(viewModel.feed, id: \.self){ taskCompleted in
-//                        TaskCompletionPost(picture: taskCompleted.picture, taskName: taskCompleted.taskName, users: room.users)
+                        TaskCompletionPost(picture: taskCompleted.picture, taskName: taskCompleted.taskName, users: viewModel.users)
                     }
                 }
                 
@@ -81,21 +84,41 @@ struct RoomView: View {
         
 
         .sheet(isPresented: $viewModel.pickingTaskToComplete) {
-            let user = room.fetchUserById(id: userManager.currentUser?.id ?? "nada")
-                ForEach(user.importedTasks, id: \.self){ userTask in
-                    Button{
-                        viewModel.takingPic.toggle()
-                        viewModel.selectedTask = userTask
-                    } label: {
-                        Text(userTask.taskName)
+            if let userTasks = viewModel.currentUser?.importedTasks {
+                ForEach(userTasks, id: \.self){ task in
+                    if !task.approved {
+                        Button{
+                            viewModel.takingPic.toggle()
+                            viewModel.selectedTask = task
+                        } label: {
+                            HStack{
+                                Image(uiImage: task.taskIcon)
+                                    .padding(.leading, 8)
+                                Text(task.taskName)
+                                Spacer()
+                                Image(systemName: "camera")
+                                    .padding(.trailing, 8)
+                            }
+                            .padding(.vertical, 12)
+                            .background(Color("grayBackGround"))
+                            .cornerRadius(20)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .inset(by: -1)
+                                    .stroke(Color.primary)
+                            )
+                        }
                     }
                 }
+            }
         }
         .sheet(isPresented: $viewModel.takingPic) {
             Camera(selectedImage: $viewModel.newPhoto, sourceType: .camera)
 
                 .onDisappear{
-                    viewModel.feed.insert(TaskCompletionModel(picture: viewModel.newPhoto, taskName: viewModel.selectedTask.taskName, approvals: []), at: 0)
+                    if let id = userManager.currentUser?.id {
+                        viewModel.addPhoto(userName: id)
+                    }
                 }
         }
         
@@ -111,17 +134,14 @@ struct RoomView: View {
         }
         
         .sheet(isPresented: $viewModel.taskImporter) {
-            if let userSelected = viewModel.userSelected {
-                ForEach(userManager.userTasks, id: \.self){ task in
-                    if room.containsTask(id: userSelected.userId, taskId: task.id){
-                        let importedTask = room.importedFromId(userId: userSelected.userId, taskId: task.id)
-                        
+            if let userSelected = viewModel.currentUser {
+                ForEach(userSelected.importedTasks, id: \.self){ task in
                         HStack{
-                            Image(uiImage: importedTask.taskIcon)
+                            Image(uiImage: task.taskIcon)
                                 .padding(.leading, 8)
-                            Text(importedTask.taskName)
+                            Text(task.taskName)
                             Spacer()
-                            Image(systemName: importedTask.approved ? "checkmark.square" : "square")
+                            Image(systemName: task.approved ? "checkmark.square" : "square")
                                 .padding(.trailing, 8)
                         }
                         .padding(.vertical, 12)
@@ -133,9 +153,13 @@ struct RoomView: View {
                                 .stroke(Color.primary)
                         )
                         
-                    } else {
+                    }
+                ForEach(userManager.userTasks, id: \.self){ task in
+                    if !viewModel.containsTask(taskId: task.id){
                         Button {
-                            room.importTask(task: task, userId: userSelected.userId)
+                            viewModel.importTask(task: task)
+                            #warning("aquele role de ter [taskId: userId] n lemrbo se era na sala, se for é aqui que faz")
+                            room.tasksID.append(task.id /*, userManagar.currentUser.userId */)
                         } label: {
                             HStack{
                                 Image(/*uiImage: task.icon*/ systemName: "book.circle")
@@ -161,7 +185,12 @@ struct RoomView: View {
                 }
             }
         }
-        
+        .onAppear(){
+            viewModel.fetchUsersInRoom(userIds: room.memberID)
+            if let myId = userManager.currentUser?.id {
+                viewModel.setCurrentUser(myId: myId)
+            }
+        }
     }
 }
 

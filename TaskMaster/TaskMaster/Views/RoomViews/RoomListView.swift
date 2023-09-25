@@ -55,10 +55,10 @@ struct RoomListView: View {
             RoomCreationView(showRoomCreation: $isCreating)
                 .environmentObject(userManager)
         }.fullScreenCover(isPresented: $showRoom) {
-            if let room = viewModel.selectedRoom {
+            if var room = viewModel.selectedRoom {
                 RoomView(room: .constant(room), showRoom: $showRoom)
             } else {
-                Text("Nada")
+                Text("Sorry, there was an error loading that room :(")
             }
         }.sheet(isPresented: $showSearchRoom) {
             VStack(alignment: .center) {
@@ -79,7 +79,7 @@ struct RoomListView: View {
                         
                         
                         if isUserInRoom(room: room) {
-                            Text("Você já está na sala")
+                            Text("You are already a member of this room")
                         } else {
                             HStack {
                                 TextField("Password", text: $password)

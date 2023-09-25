@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+final class AppFlow {
+    @Published var showModel1: Bool = false
+}
+
 @main
 struct TaskMasterApp: App {
     
@@ -16,6 +20,9 @@ struct TaskMasterApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(userManager)
+//                .onOpenURL { <#URL#> in
+//                    
+//                }
         }
     }
 }

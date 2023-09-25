@@ -12,7 +12,7 @@ struct TaskCompletionPost: View {
     @State var postModel: TaskCompletionModel
     @State var users: [UserInRoom]
     
-    init(picture: UIImage, taskName: String, approvals: [Bool] = [], users: [UserInRoom]) {
+    init(picture: UIImage, taskName: String, approvals: [String] = [], users: [UserInRoom]) {
        postModel = TaskCompletionModel(picture: picture, taskName: taskName, approvals: approvals)
         self.users = users
     }

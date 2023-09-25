@@ -14,9 +14,6 @@ struct Room: Recordable, Hashable {
     var name: String
     var tasksID: [String] = []
     var memberID: [String] = []
-//    var users: [UserInRoom] = [UserInRoom(userName: "Maic", userId: "123", score: 12, importedTasks: [ImportedTaskModel(taskId: "task1", taskName: "FAcl", picture: UIImage(systemName: "square")!, approved: false, upvotes: 0)]),
-//                               UserInRoom(userName: "X", userId: "234", score: 12, importedTasks: [ImportedTaskModel(taskId: "task2", taskName: "dificil", picture: UIImage(), approved: true, upvotes: 1), ImportedTaskModel(taskId: "task3", taskName: "Swift", picture: UIImage(), approved: false, upvotes: 0)])
-//    ]
     var lastTaskAdd: Date?
     var password: String = ""
     var creatorId: String = ""
@@ -88,59 +85,4 @@ struct Room: Recordable, Hashable {
         
         self.record = record
     }
-    
-    func fetchScoreById(id: String) -> Int {
-      //  let userInRoom = users.first(where: {$0.userId == id})
-        return 0//userInRoom?.score ?? 0
-    }
-    
-    func fetchUserById(id: String) -> UserInRoom {
-      //  let userInRoom = users.first(where: {$0.userId == id})
-        return  UserInRoom(userName: "gay", userId: "gay", score: 24, importedTasks: [])
-    }
-    
-    func containsTask(id: String, taskId: String) -> Bool {
-//        let userToSearch = users.first(where: {$0.userId == id})
-//        if userToSearch != nil {
-//            var value = false
-//            userToSearch!.importedTasks.forEach { task in
-//                if task.taskId == taskId{
-//                    value = true
-//                }
-//            }
-//            return value
-//        }
-        return false
-    }
-    
-    func importedFromId(userId: String, taskId: String) -> ImportedTaskModel {
-      //  let userInRoom = users.first(where: {$0.userId == userId})
-        var taskToReturn: ImportedTaskModel = ImportedTaskModel(taskId: "deu ruim", taskIcon: UIImage(systemName: "book.circle")!, taskName: "deu Ruim", picture: UIImage(), approved: false, upvotes: 0)
-//        if userInRoom != nil {
-//            userInRoom!.importedTasks.forEach { task in
-//                if task.taskId == taskId{
-//                    taskToReturn = task
-//                }
-//            }
-//            return taskToReturn
-//        }
-        return taskToReturn
-    }
-    
-    func importTask(task: TaskModel, userId: String){
-//        let taskToImport = ImportedTaskModel(taskId: task.id, taskName: task.taskName, picture: UIImage(), approved: false, upvotes: 0)
-//        
-//        var user = users.first(where: {$0.userId == userId})
-//        
-//        if user != nil {
-//            
-//            var listOfUsers = users.filter {$0 != user}
-//            
-//            user!.importedTasks.append(taskToImport)
-//            
-//            listOfUsers.append(user!)
-//        }
-        
-    }
-    
 }
