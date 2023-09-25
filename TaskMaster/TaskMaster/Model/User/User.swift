@@ -42,5 +42,8 @@ struct User: Recordable {
         if let xp = record["xp"] as? Int {
             self.xp = xp
         }
+        
+        self.record = record
+
     }
 }
