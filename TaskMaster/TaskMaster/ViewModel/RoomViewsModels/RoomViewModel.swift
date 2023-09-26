@@ -106,7 +106,8 @@ final class RoomViewModel: ObservableObject {
         
     }
 
-    func addPhoto(userName: String) {
-        self.feed.insert(TaskCompletionModel(picture: self.newPhoto, taskName: self.selectedTask.taskName, approvals: [userName]), at: 0)
+    func addPhoto(userId: String) {
+        
+        self.feed.insert(TaskCompletionModel(userId: userId, picture: self.newPhoto, taskName: self.selectedTask.taskName, approvals: []), at: 0)
     }
 }

@@ -67,7 +67,8 @@ struct RoomView: View {
                     Spacer().frame(height: 200)
                     
                     ForEach(viewModel.feed, id: \.self){ taskCompleted in
-                        TaskCompletionPost(picture: taskCompleted.picture, taskName: taskCompleted.taskName, users: viewModel.users)
+                        TaskCompletionPost(postModel: TaskCompletionModel(userId: taskCompleted.userId, picture: taskCompleted.picture, taskName: taskCompleted.taskName, approvals: taskCompleted.approvals), users: viewModel.users, currentUserId: userManager.currentUser?.id ?? "nil", toggleCam: $viewModel.takingPic)
+                            //userId: taskCompleted.userId, picture: taskCompleted.picture, taskName: taskCompleted.taskName, users: viewModel.users, currentUserId: viewModel.currentUser?.userId ?? "nil", toggleCam: $viewModel.takingPic)
                     }
                 }
                 
@@ -117,7 +118,7 @@ struct RoomView: View {
 
                 .onDisappear{
                     if let id = userManager.currentUser?.id {
-                        viewModel.addPhoto(userName: id)
+                        viewModel.addPhoto(userId: id)
                     }
                 }
         }
